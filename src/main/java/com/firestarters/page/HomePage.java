@@ -99,7 +99,7 @@ public class HomePage extends AbstractPage {
 		return subcategories;
 	}
 
-	public WebElement getWebElementElementFromListByText(List<WebElement> list,String itemName) {
+	public WebElement getWebElementFromListByText(List<WebElement> list,String itemName) {
         for (WebElement item : list) {
             if (item.getText().toLowerCase().equals(itemName.toLowerCase())) {
                 return item;
@@ -131,7 +131,7 @@ public class HomePage extends AbstractPage {
 	    WebElement cat=getCategory(category);
 	    hoverOnCategory(cat);
 	    //List<WebElement> subcategories=getSubcategoryListOfACategory(cat);
-        getWebElementElementFromListByText(getSubcategoryListOfACategory(cat),searchedSubcategory);
+        getWebElementFromListByText(getSubcategoryListOfACategory(cat),searchedSubcategory).click();
 
     }
     //

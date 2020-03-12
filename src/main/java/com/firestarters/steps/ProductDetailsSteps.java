@@ -38,7 +38,7 @@ public class ProductDetailsSteps {
 
     //Agota 10.03.2020
     @Step
-    public CartProduct getCartProduct(String c,String s,String qty){
+    public CartProduct addProduct(String c, String s, String qty){
         CartProduct cartProduct=new CartProduct();
         productDetailsPage.selectColor(c);
         productDetailsPage.selectSize(s);

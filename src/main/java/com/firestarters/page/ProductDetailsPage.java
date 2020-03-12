@@ -3,6 +3,7 @@ package com.firestarters.page;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -104,6 +105,7 @@ public class ProductDetailsPage extends  AbstractPage {
         double returnedPrice = correctPrice.doubleValue();
         return returnedPrice;
     }
+
 
 
 }
