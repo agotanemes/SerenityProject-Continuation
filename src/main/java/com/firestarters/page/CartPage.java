@@ -121,7 +121,9 @@ public class CartPage extends  AbstractPage{
             Double correctPrice = convertStringToDouble(stringReplace(price));
             double priceAsdouble = correctPrice.doubleValue();
             String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
+            //to do
             //String productColor=product.findElement(By.cssSelector());
+            //String productSize=product.findElement(By.cssSelector());
 
         }
         return products;
