@@ -18,7 +18,7 @@ public class ProductDetailsTest extends BaseTest{
     @Steps
     ProductDetailsSteps productDetailsSteps;
     @Test
-    //aici dfjdhjugf
+    //aici dfjdhjugfkl
     public void getCartProduct(){
         String name="TORI TANK";
         String name1="Lafayette Convertible Dress";
