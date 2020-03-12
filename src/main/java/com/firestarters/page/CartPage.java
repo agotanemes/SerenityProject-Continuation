@@ -1,5 +1,6 @@
 package com.firestarters.page;
 
+import com.firestarters.models.CartProduct;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -8,6 +9,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.List;
 import static com.firestarters.utils.Utils.*;
 
@@ -109,6 +111,20 @@ public class CartPage extends  AbstractPage{
         Double totalpr=new Double(total);
         Assert.assertTrue(totalPrice.equals(totalpr));
 
+    }
+    public List<CartProduct> getProducts(){
+        List<CartProduct> products=new ArrayList<>();
+        List<WebElementFacade> productListFromWeb = getProductList();
+        for (WebElementFacade product : productListFromWeb) {
+            String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
+            String qty = product.findElement(By.cssSelector("td[class='product-cart-actions']>input")).getAttribute("value");
+            Double correctPrice = convertStringToDouble(stringReplace(price));
+            double priceAsdouble = correctPrice.doubleValue();
+            String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
+            //String productColor=product.findElement(By.cssSelector());
+
+        }
+        return products;
     }
     //
 
