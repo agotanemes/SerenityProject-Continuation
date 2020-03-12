@@ -1,0 +1,8 @@
+/target
+/bin
+.settings
+.classpath
+.project
+.idea
+internship-pom.iml
+SerenityProject.iml
