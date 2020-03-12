@@ -10,11 +10,12 @@ import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.annotations.UseTestDataFrom;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-//old value
-//@RunWith(SerenityRunner.class)
+
 //changes
-@RunWith(SerenityParameterizedRunner.class)
-@UseTestDataFrom(value = Constants.CSV_FILES_PATH + "CartPageProducts.csv")
+//@RunWith(SerenityParameterizedRunner.class)
+//@UseTestDataFrom(value = Constants.CSV_FILES_PATH + "CartPageProducts.csv")
+//old value
+@RunWith(SerenityRunner.class)
 public class CartPageTest extends BaseTest{
 
     @Steps
@@ -30,12 +31,14 @@ public class CartPageTest extends BaseTest{
         loginSteps.navigateToLoginPage();
         loginSteps.loginUser();
         //old values
-        //searchPageSteps.addProductFromSearch("eye","eye");
-        //searchPageSteps.addProductFromSearch("table","table");
+        searchPageSteps.addProductFromSearch("eye","eye");
+        searchPageSteps.addProductFromSearch("table","table");
+        cartPageSteps.verifyIfSubtotalIsCorrect();
+
         //or
        // webdriver.get("http://qa2.dev.evozon.com/checkout/cart/");
         //changes
-        searchPageSteps.addProductFromSearch(searchProduct,text);
-        cartPageSteps.verifyIfSubtotalIsCorrect();
+        //searchPageSteps.addProductFromSearch(searchProduct,text);
+        //cartPageSteps.verifyIfSubtotalIsCorrect();
     }
 }

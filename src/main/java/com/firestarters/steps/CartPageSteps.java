@@ -37,33 +37,12 @@ public class CartPageSteps {
             cartPage.proceedToCheckout();
     }
 
-    //Agota
+    //Agota 12.03.2020
     @Step
     public void verifyIfSubtotalIsCorrect() {
-        //product list
-        List<WebElementFacade> productList = cartPage.getProductList();
-        Double totalPrice=convertStringToDouble(stringReplace(cartPage.getTotalPrice().getText()));
-        double total=0;
-        for (WebElementFacade product : productList) {
-            String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
-            String qty = product.findElement(By.cssSelector(" td[class='product-cart-actions']>input")).getAttribute("value");
-            String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
-
-            Double correctPrice = convertStringToDouble(stringReplace(price));
-            //System.out.println(correctPrice);
-            Double correctQty = convertStringToDouble(qty);
-            //System.out.println(correctQty);
-            Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
-            //System.out.println(correctSubtotal);
-            Assert.assertTrue(correctSubtotal.equals(correctPrice * correctQty));
-            double correctSubtotalAsdouble = correctSubtotal.doubleValue();
-            total= total+correctSubtotalAsdouble;
-
-        }
-     Double totalpr=new Double(total);
-        Assert.assertTrue(totalPrice.equals(totalpr));
-
+        cartPage.verifyIfSubtotalIsCorrect();
     }
+    //
 
 
     @Step

@@ -3,6 +3,9 @@ package com.firestarters.page;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
+import net.thucydides.core.annotations.Step;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -80,5 +83,33 @@ public class CartPage extends  AbstractPage{
     public WebElementFacade getSuccessMsgAddedInWishlist(){
         return successMsgAddedInWishlist;
     }
+    //12.03.2020
+    @Step
+    public void verifyIfSubtotalIsCorrect() {
+        //product list
+        List<WebElementFacade> productList = getProductList();
+        Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+        double total=0;
+        for (WebElementFacade product : productList) {
+            String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
+            String qty = product.findElement(By.cssSelector(" td[class='product-cart-actions']>input")).getAttribute("value");
+            String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
+
+            Double correctPrice = convertStringToDouble(stringReplace(price));
+            //System.out.println(correctPrice);
+            Double correctQty = convertStringToDouble(qty);
+            //System.out.println(correctQty);
+            Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
+            //System.out.println(correctSubtotal);
+            Assert.assertTrue(correctSubtotal.equals(correctPrice * correctQty));
+            double correctSubtotalAsdouble = correctSubtotal.doubleValue();
+            total= total+correctSubtotalAsdouble;
+
+        }
+        Double totalpr=new Double(total);
+        Assert.assertTrue(totalPrice.equals(totalpr));
+
+    }
+    //
 
 }
