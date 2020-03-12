@@ -86,10 +86,13 @@
                 <version>3.0.0-M4</version>
                 <configuration>
                     <includes>
+                        <!--suppress UnresolvedMavenProperty -->
                         <include>**/*${Test}.class</include>
                     </includes>
                     <systemPropertyVariables>
+                        <!--suppress UnresolvedMavenProperty -->
                         <webdriver.driver>${webdriver.driver}</webdriver.driver>
+                        <!--suppress UnresolvedMavenProperty -->
                         <webdriver.chrome.driver>${webdriver.chrome.path}</webdriver.chrome.driver>
                     </systemPropertyVariables>
                 </configuration>
