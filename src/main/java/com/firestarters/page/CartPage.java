@@ -143,39 +143,7 @@ public class CartPage extends  AbstractPage{
         }
         return products;
     }
-    public Double getCartProductSubtotalAsProduct(String name){
-        List<WebElementFacade> productList = getProductList();
-        for (WebElementFacade product : productList) {
-            //name
-            String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
-            if(productName.equals(name)) {
-                //price
-                String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
-                //qty
-                String qty = product.findElement(By.cssSelector(" td[class='product-cart-actions']>input")).getAttribute("value");
-                Double correctPrice = convertStringToDouble(stringReplace(price));
-                Double correctQty = convertStringToDouble(qty);
-                return correctPrice * correctQty;
-            }
 
-        }
-        return null;
-    }
-    //returns cart product subtotal from cart (get the subtotal webelem and returns it as Double)
-    public Double getCartProductSubtotal(String name){
-        List<WebElementFacade> productList = getProductList();
-        for (WebElementFacade product : productList) {
-            //name
-            String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
-            if(productName.equals(name)) {
-                String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
-                Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
-                return correctSubtotal;
-            }
-
-        }
-        return null;
-    }
 
     //
 
