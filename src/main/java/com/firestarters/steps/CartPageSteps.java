@@ -56,9 +56,18 @@ public class CartPageSteps {
     @Step
     public void verifySubtotalIsCorrect(List<CartProduct> products){
 
-
     }
 
+    //
+    //13.03.2020
+    @Step
+    public void verifyIfTotalPriceIsCorrect(){
+        Double actualPrice=cartPage.getTotalPriceAsSum();
+        Double expectedPrice=cartPage.totalPriceAsDouble();
+        System.out.println("pretul ca suma de subtotaluri "+ actualPrice);
+        System.out.println("pretul de pe front "+expectedPrice);
+        //Assert.assertTrue(actualPrice.equals(expectedPrice));
+    }
     //
 
 }

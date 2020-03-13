@@ -75,6 +75,7 @@ public class CartPageTest extends BaseTest{
         for(CartProduct product:products){
             System.out.println(product.getName()+" "+product.getColor()+" "+product.getSize()+" "+product.getQty()+" "+product.getPrice()+" "+product.getSubtotal());
         }
+        cartPageSteps.verifyIfTotalPriceIsCorrect();
 
     }
 }

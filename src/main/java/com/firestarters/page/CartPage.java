@@ -112,6 +112,7 @@ public class CartPage extends  AbstractPage{
         Assert.assertTrue(totalPrice.equals(totalpr));
 
     }
+    //13.03.2020
     public List<CartProduct> getProducts(){
         List<CartProduct> products=new ArrayList<>();
         List<WebElementFacade> productListFromWeb = getProductList();
@@ -142,6 +143,30 @@ public class CartPage extends  AbstractPage{
             products.add(pr);
         }
         return products;
+    }
+    @Step
+    public Double getTotalPriceAsSum() {
+        //product list
+        List<WebElementFacade> productList = getProductList();
+        //Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+
+        double total=0;
+        for (WebElementFacade product : productList) {
+            String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
+            Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
+            double correctSubtotalAsdouble = correctSubtotal.doubleValue();
+            total= total+correctSubtotalAsdouble;
+
+        }
+        Double totalpr=total;
+
+        return totalpr;
+
+    }
+    @Step
+    public Double totalPriceAsDouble(){
+        Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+        return totalPrice;
     }
 
 
