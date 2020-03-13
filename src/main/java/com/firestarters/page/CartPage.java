@@ -108,7 +108,7 @@ public class CartPage extends  AbstractPage{
             total= total+correctSubtotalAsdouble;
 
         }
-        Double totalpr=new Double(total);
+        Double totalpr=total;
         Assert.assertTrue(totalPrice.equals(totalpr));
 
     }
@@ -116,18 +116,67 @@ public class CartPage extends  AbstractPage{
         List<CartProduct> products=new ArrayList<>();
         List<WebElementFacade> productListFromWeb = getProductList();
         for (WebElementFacade product : productListFromWeb) {
+            CartProduct pr=new CartProduct();
             String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
+            //qty
             String qty = product.findElement(By.cssSelector("td[class='product-cart-actions']>input")).getAttribute("value");
             Double correctPrice = convertStringToDouble(stringReplace(price));
+            //price
             double priceAsdouble = correctPrice.doubleValue();
+            //name
             String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
-            //to do
-            //String productColor=product.findElement(By.cssSelector());
-            //String productSize=product.findElement(By.cssSelector());
-
+            //color
+            String productColor=product.findElement(By.cssSelector("td.product-cart-info dd:nth-child(2)")).getText();
+            //size
+            String productSize=product.findElement(By.cssSelector(" dd:nth-child(4)")).getText();;
+            //subtotal
+            String subtotal=product.findElement(By.cssSelector("td[class='product-cart-total'] span[class='price']")).getText();
+            Double correctSubtotal=convertStringToDouble(stringReplace(subtotal));
+            double subtotalAsdouble = correctSubtotal.doubleValue();
+            pr.setColor(productColor);
+            pr.setSize(productSize);
+            pr.setQty(qty);
+            pr.setName(productName);
+            pr.setPrice(priceAsdouble);
+            pr.setSubtotal(subtotalAsdouble);
+            products.add(pr);
         }
         return products;
     }
+    public Double getCartProductSubtotalAsProduct(String name){
+        List<WebElementFacade> productList = getProductList();
+        for (WebElementFacade product : productList) {
+            //name
+            String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
+            if(productName.equals(name)) {
+                //price
+                String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
+                //qty
+                String qty = product.findElement(By.cssSelector(" td[class='product-cart-actions']>input")).getAttribute("value");
+                Double correctPrice = convertStringToDouble(stringReplace(price));
+                Double correctQty = convertStringToDouble(qty);
+                return correctPrice * correctQty;
+            }
+
+        }
+        return null;
+    }
+    //returns cart product subtotal from cart (get the subtotal webelem and returns it as Double)
+    public Double getCartProductSubtotal(String name){
+        List<WebElementFacade> productList = getProductList();
+        for (WebElementFacade product : productList) {
+            //name
+            String productName=product.findElement(By.cssSelector(" .product-name>a")).getText();
+            if(productName.equals(name)) {
+                String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
+                Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
+                return correctSubtotal;
+            }
+
+        }
+        return null;
+    }
+
     //
 
 }

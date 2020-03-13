@@ -1,5 +1,6 @@
 package com.firestarters.steps;
 
+import com.firestarters.models.CartProduct;
 import com.firestarters.page.CartPage;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.Step;
@@ -25,7 +26,6 @@ public class CartPageSteps {
         assertEquals(expectedSize, cartPage.getNumberOfElementsFromCartProductsList());
         cartPage.proceedToCheckout();
     }
-
     @Step
     public void proceedToCheckoutForVerify() {
         cartPage.proceedToCheckout();
@@ -44,11 +44,22 @@ public class CartPageSteps {
     }
     //
 
-
     @Step
     public void verifyIfProductTableIsDisplayed() {
         assertTrue(cartPage.getProductTable().isDisplayed());
     }
+    //Agota 13.03.2020
+    @Step
+    public List<CartProduct> getProducts(){
+        return cartPage.getProducts();
+    }
+    @Step
+    public void verifySubtotalIsCorrect(List<CartProduct> products){
+
+
+    }
+
+    //
 
 }
 

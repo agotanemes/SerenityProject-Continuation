@@ -105,6 +105,11 @@ public class ProductDetailsPage extends  AbstractPage {
         double returnedPrice = correctPrice.doubleValue();
         return returnedPrice;
     }
+    public double getStringAsdouble(String s){
+        Double correctPrice = convertStringToDouble(stringReplace(s));
+        double returnedPrice = correctPrice.doubleValue();
+        return returnedPrice;
+    }
 
 
 

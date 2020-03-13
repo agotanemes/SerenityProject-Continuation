@@ -1,6 +1,7 @@
 package test;
 
 import com.firestarters.models.CartProduct;
+import com.firestarters.steps.CartPageSteps;
 import com.firestarters.steps.HomepageSteps;
 import com.firestarters.steps.ProductDetailsSteps;
 import com.firestarters.steps.ProductPageSteps;
@@ -21,6 +22,8 @@ public class ProductDetailsTest extends BaseTest{
     @Steps
     ProductDetailsSteps productDetailsSteps;
     List<CartProduct> products = new ArrayList<CartProduct>();
+    @Steps
+    CartPageSteps cartPageSteps;
     @Test
     //modificare calc
     public void getCartProduct(){
@@ -33,24 +36,20 @@ public class ProductDetailsTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct);
 
-       // webdriver.get("http://qa2.dev.evozon.com/");
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","1");
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct1);
 
-        webdriver.get("http://qa2.dev.evozon.com/");
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name);
         CartProduct cartProduct2=productDetailsSteps.addProduct("Indigo","M","1");
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct2);
 
-        System.out.println(products.size());
-        System.out.println(cartProduct.getColor()+" "+cartProduct.getSize()+" "+cartProduct.getQty()+" "+cartProduct.getProductName()+" "+cartProduct.getProductPrice());
-        System.out.println(cartProduct1.getColor()+" "+cartProduct1.getSize()+" "+cartProduct1.getQty()+" "+cartProduct1.getProductName()+" "+cartProduct1.getProductPrice());
-        System.out.println(cartProduct2.getColor()+" "+cartProduct2.getSize()+" "+cartProduct2.getQty()+" "+cartProduct2.getProductName()+" "+cartProduct2.getProductPrice());
+        List<CartProduct> productsFromCart=cartPageSteps.getProducts();
+        productDetailsSteps.verifyTwoCartListsAreEqual(products,productsFromCart);
 
     }
 
