@@ -12,7 +12,8 @@ public class Utils {
         //System.out.println(s);
         String s1=s.replace(" $US","").replace("$", "");
        //System.out.println(s);
-        String s2=s1.replace(",",".");
+        String s2=s1.replace(",","");
+        String s3=s2.replace("$","");
         return s2;
 
     }

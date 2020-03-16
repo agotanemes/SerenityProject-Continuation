@@ -1,6 +1,7 @@
 package com.firestarters.steps;
 
 import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import com.firestarters.page.CartPage;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.Step;
@@ -63,13 +64,30 @@ public class CartPageSteps {
     @Step
     public void verifyIfTotalPriceIsCorrect(){
         Double actualPrice=cartPage.getTotalPriceAsSum();
-        Double expectedPrice=cartPage.totalPriceAsDouble();
-        System.out.println("pretul ca suma de subtotaluri "+ actualPrice);
-        System.out.println("pretul de pe front "+expectedPrice);
-        //Assert.assertTrue(actualPrice.equals(expectedPrice));
+        //luam subtototalul fara Tax
+        Double expectedPrice=cartPage.getSubtotal();
+        //System.out.println("pretul ca suma de subtotaluri "+ actualPrice);
+        //System.out.println("pretul de pe front "+expectedPrice);
+        Assert.assertTrue(actualPrice.equals(expectedPrice));
     }
     //
-
+    @Step
+    public void getTax(){
+        double tax=cartPage.getTax();
+    }
+    @Step
+    public void getSubtotal(){
+        double subtotal=cartPage.getSubtotal();
+    }
+    @Step
+    public CartTotalPrices getPricesThatComposeGrangTotal(){
+        CartTotalPrices cartTotalPrices=cartPage.getPricesThatComposeGrangTotal();
+        double sum= cartTotalPrices.getSubtotal()+cartTotalPrices.getTax();
+        Double sumDouble=sum;
+        Double grandTotal=cartTotalPrices.getGrandTotal();
+        Assert.assertTrue(sumDouble.equals(grandTotal));
+        return cartTotalPrices;
+    }
 }
 
 

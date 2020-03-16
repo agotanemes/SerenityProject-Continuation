@@ -50,6 +50,7 @@ public class ProductDetailsTest extends BaseTest{
 
         List<CartProduct> productsFromCart=cartPageSteps.getProducts();
         productDetailsSteps.verifyTwoCartListsAreEqual(products,productsFromCart);
+        cartPageSteps.verifyIfTotalPriceIsCorrect();
 
 
     }

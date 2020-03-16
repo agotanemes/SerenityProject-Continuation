@@ -1,6 +1,7 @@
 package test;
 
 import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import com.firestarters.page.CartPage;
 import com.firestarters.steps.*;
 import com.firestarters.utils.Constants;
@@ -70,12 +71,17 @@ public class CartPageTest extends BaseTest{
         productPageSteps.openProduct(name1);
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","2");
         productDetailsSteps.clickAddToCartBtn();
+
         List<CartProduct> products=cartPageSteps.getProducts();
         System.out.println(products.size());
         for(CartProduct product:products){
             System.out.println(product.getName()+" "+product.getColor()+" "+product.getSize()+" "+product.getQty()+" "+product.getPrice()+" "+product.getSubtotal());
         }
         cartPageSteps.verifyIfTotalPriceIsCorrect();
+        //cartPageSteps.getTax();
+        //cartProduct.getSubtotal();
+        //CartTotalPrices cartTotalPrices=cartPageSteps.getPricesThatComposeGrangTotal();
+        //System.out.println(cartTotalPrices.getGrandTotal()+" "+cartTotalPrices.getTax()+" "+cartTotalPrices.getSubtotal());
 
     }
 }

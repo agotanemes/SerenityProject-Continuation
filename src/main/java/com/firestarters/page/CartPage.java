@@ -1,6 +1,7 @@
 package com.firestarters.page;
 
 import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -37,6 +38,8 @@ public class CartPage extends  AbstractPage{
     private List<WebElementFacade> productList;
     @FindBy(css = ".a-right>strong>span[class='price']")
     private WebElement totalPrice;
+    //@FindBy(css=".a-right span[class='price']")
+    //private List<WebElement> totalPriceList;
 
 //-------------------
   //Ciuverca Ionut
@@ -86,7 +89,7 @@ public class CartPage extends  AbstractPage{
         return successMsgAddedInWishlist;
     }
     //12.03.2020
-    @Step
+
     public void verifyIfSubtotalIsCorrect() {
         //product list
         List<WebElementFacade> productList = getProductList();
@@ -144,12 +147,12 @@ public class CartPage extends  AbstractPage{
         }
         return products;
     }
-    @Step
+
     public Double getTotalPriceAsSum() {
         //product list
         List<WebElementFacade> productList = getProductList();
         //Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
-
+        //System.out.println("Pretul total e: "+ totalPrice);
         double total=0;
         for (WebElementFacade product : productList) {
             String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
@@ -163,10 +166,37 @@ public class CartPage extends  AbstractPage{
         return totalpr;
 
     }
-    @Step
-    public Double totalPriceAsDouble(){
-        Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+
+    public double totalPriceAsDouble(){
+        double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
         return totalPrice;
+    }
+
+
+    public double getTax(){
+        WebElement tax =  getDriver().findElement(By.xpath("//tr/td[contains(text(),'Tax')]/following-sibling::td/span"));
+        String taxAsString=tax.getText();
+        double taxAsDouble=convertStringToDouble(stringReplace(taxAsString));
+        //System.out.println("taxa ca double: "+ taxAsDouble);
+        return taxAsDouble;
+    }
+
+    public double getSubtotal(){
+        WebElement subtotal= getDriver().findElement(By.xpath("//tr/td[contains(text(),'Subtotal')]/following-sibling::td/span"));
+        double subtotalAsDouble=convertStringToDouble(stringReplace(subtotal.getText()));
+        //System.out.println("subtotalul ca double: "+ subtotalAsDouble);
+        return subtotalAsDouble;
+    }
+
+    public CartTotalPrices getPricesThatComposeGrangTotal(){
+     CartTotalPrices cartTotalPrices=new CartTotalPrices();
+     double totalPrice=totalPriceAsDouble();
+     double tax=getTax();
+     double subtotal=getSubtotal();
+     cartTotalPrices.setGrandTotal(totalPrice);
+     cartTotalPrices.setTax(tax);
+     cartTotalPrices.setSubtotal(subtotal);
+     return cartTotalPrices;
     }
 
 
