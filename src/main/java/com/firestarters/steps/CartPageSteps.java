@@ -64,7 +64,7 @@ public class CartPageSteps {
     @Step
     public void verifyIfTotalPriceIsCorrect(){
         Double actualPrice=cartPage.getTotalPriceAsSum();
-        //luam subtototalul fara Tax
+        //luam grand totalul fara Tax=subtotal
         Double expectedPrice=cartPage.getSubtotal();
         //System.out.println("pretul ca suma de subtotaluri "+ actualPrice);
         //System.out.println("pretul de pe front "+expectedPrice);

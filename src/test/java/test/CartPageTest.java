@@ -78,6 +78,8 @@ public class CartPageTest extends BaseTest{
             System.out.println(product.getName()+" "+product.getColor()+" "+product.getSize()+" "+product.getQty()+" "+product.getPrice()+" "+product.getSubtotal());
         }
         cartPageSteps.verifyIfTotalPriceIsCorrect();
+        //returneaza un obiect de tipul CartTotalPrices si verifica daca grand totalul este egal cu suma dintre subtotal si tax;
+        cartPageSteps.getPricesThatComposeGrangTotal();
         //cartPageSteps.getTax();
         //cartProduct.getSubtotal();
         //CartTotalPrices cartTotalPrices=cartPageSteps.getPricesThatComposeGrangTotal();
