@@ -21,6 +21,7 @@ public class CartPageSteps {
 
     CartPage cartPage;
 
+
     //Ciuverca Ionut
     @Step
     public void proceedToCheckout(int expectedSize) {
@@ -54,22 +55,11 @@ public class CartPageSteps {
     public List<CartProduct> getProducts(){
         return cartPage.getProducts();
     }
-    @Step
-    public void verifySubtotalIsCorrect(List<CartProduct> products){
 
-    }
 
     //
     //13.03.2020
-    @Step
-    public void verifyIfTotalPriceIsCorrect(){
-        Double actualPrice=cartPage.getTotalPriceAsSum();
-        //luam grand totalul fara Tax=subtotal
-        Double expectedPrice=cartPage.getSubtotal();
-        //System.out.println("pretul ca suma de subtotaluri "+ actualPrice);
-        //System.out.println("pretul de pe front "+expectedPrice);
-        Assert.assertTrue(actualPrice.equals(expectedPrice));
-    }
+
     //
     @Step
     public void getTax(){
@@ -88,6 +78,28 @@ public class CartPageSteps {
         Assert.assertTrue(sumDouble.equals(grandTotal));
         return cartTotalPrices;
     }
+    @Step
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(){
+        return cartPage.calculatePricesThatComposeGrandTotal();
+    }
+    @Step
+    public void verifyTotals(CartTotalPrices actual,CartTotalPrices expected){
+        Double actualSubtotal=actual.getSubtotal();
+        Double expectedSubtotal=expected.getSubtotal();
+        Double actualTax=actual.getTax();
+        Double expectedTax=expected.getTax();
+        Double actualGrandTotal=actual.getGrandTotal();
+        Double expectedGrandTotal=expected.getGrandTotal();
+        /*Double actualPrice=cartPage.getTotalPriceAsSum();
+        //luam grand totalul fara Tax=subtotal
+        Double expectedPrice=cartPage.getSubtotal();
+        Assert.assertTrue(actualPrice.equals(expectedPrice));
+         */
+        Assert.assertTrue(actualSubtotal.equals(expectedSubtotal));
+        Assert.assertTrue(actualTax.equals(expectedTax));
+        Assert.assertTrue(actualGrandTotal.equals(expectedGrandTotal));
+    }
+
 }
 
 

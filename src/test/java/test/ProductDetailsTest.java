@@ -38,6 +38,7 @@ public class ProductDetailsTest extends BaseTest{
 
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
+        //cand apelez metoda de addProduct imi setez si subtotalul pt un obiect de tip CartProduct ca fiind produsul dintre cantitate si pret
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","1");
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct1);
@@ -48,9 +49,10 @@ public class ProductDetailsTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct2);
 
+        //verificare ca prodisele adaugate sunt aceleasi cu cele din cart
         List<CartProduct> productsFromCart=cartPageSteps.getProducts();
         productDetailsSteps.verifyTwoCartListsAreEqual(products,productsFromCart);
-        cartPageSteps.verifyIfTotalPriceIsCorrect();
+        //cartPageSteps.verifyIfTotalPriceIsCorrect();
 
 
     }

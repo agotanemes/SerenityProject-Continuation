@@ -46,7 +46,6 @@ public class CartPageTest extends BaseTest{
        // searchPageSteps.addProductFromSearch("table","table");
         webdriver.get("http://qa2.dev.evozon.com/checkout/cart/");
         cartPageSteps.verifyIfSubtotalIsCorrect();
-
         //or
        //webdriver.get("http://qa2.dev.evozon.com/checkout/cart/");
         //changes
@@ -55,11 +54,7 @@ public class CartPageTest extends BaseTest{
     }
     @Test
     public void getProducts(){
-        /*loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
-        webdriver.get("http://qa2.dev.evozon.com/checkout/cart/");
-        List<CartProduct> products=cartPageSteps.getProducts();
-        System.out.println(products.size());*/
+        //produse care se adauga in cos
         String name2="ELIZABETH KNIT TOP";
         String name1="Lafayette Convertible Dress";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
@@ -73,17 +68,15 @@ public class CartPageTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
 
         List<CartProduct> products=cartPageSteps.getProducts();
-        System.out.println(products.size());
+        System.out.println("Products from cart:");
         for(CartProduct product:products){
             System.out.println(product.getName()+" "+product.getColor()+" "+product.getSize()+" "+product.getQty()+" "+product.getPrice()+" "+product.getSubtotal());
         }
-        cartPageSteps.verifyIfTotalPriceIsCorrect();
-        //returneaza un obiect de tipul CartTotalPrices si verifica daca grand totalul este egal cu suma dintre subtotal si tax;
-        cartPageSteps.getPricesThatComposeGrangTotal();
-        //cartPageSteps.getTax();
-        //cartProduct.getSubtotal();
-        //CartTotalPrices cartTotalPrices=cartPageSteps.getPricesThatComposeGrangTotal();
-        //System.out.println(cartTotalPrices.getGrandTotal()+" "+cartTotalPrices.getTax()+" "+cartTotalPrices.getSubtotal());
-
+        //un obiect care are calculate grand total,subtotal si tax
+        CartTotalPrices actual=cartPageSteps.calculatePricesThatComposeGrandTotal();
+        //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
+        CartTotalPrices expected=cartPageSteps.getPricesThatComposeGrangTotal();
+        //verificam ca cele doua obiecte sunt la fel
+        cartPageSteps.verifyTotals(actual,expected);
     }
 }
