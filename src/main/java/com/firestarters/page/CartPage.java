@@ -41,6 +41,8 @@ public class CartPage extends  AbstractPage{
     //@FindBy(css=".a-right span[class='price']")
     //private List<WebElement> totalPriceList;
     final double tax=90.75;
+    @FindBy(css=".count")
+    private WebElement nrOfProductsFromCart;
 
 //-------------------
   //Ciuverca Ionut
@@ -206,6 +208,9 @@ public class CartPage extends  AbstractPage{
         cartTotalPrices.setTax(tax);
         cartTotalPrices.setGrandTotal(tax+subtotal);
         return cartTotalPrices;
+    }
+    public String getNrOfProductsFromCart(){
+        return nrOfProductsFromCart.getText();
     }
 
 

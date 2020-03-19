@@ -90,14 +90,17 @@ public class CartPageSteps {
         Double expectedTax=expected.getTax();
         Double actualGrandTotal=actual.getGrandTotal();
         Double expectedGrandTotal=expected.getGrandTotal();
-        /*Double actualPrice=cartPage.getTotalPriceAsSum();
-        //luam grand totalul fara Tax=subtotal
-        Double expectedPrice=cartPage.getSubtotal();
-        Assert.assertTrue(actualPrice.equals(expectedPrice));
-         */
         Assert.assertTrue(actualSubtotal.equals(expectedSubtotal));
         Assert.assertTrue(actualTax.equals(expectedTax));
         Assert.assertTrue(actualGrandTotal.equals(expectedGrandTotal));
+    }
+    @Step
+    public void verifyNrOfProductsFromCart(){
+
+         String nrprod=cartPage.getNrOfProductsFromCart();
+         Integer size=cartPage.getProducts().size();
+         Integer nrProducts=Integer.parseInt(nrprod);
+         Assert.assertFalse(size.equals(nrProducts));
     }
 
 }
