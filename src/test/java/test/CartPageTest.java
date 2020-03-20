@@ -78,7 +78,9 @@ public class CartPageTest extends BaseTest{
         CartTotalPrices expected=cartPageSteps.getPricesThatComposeGrangTotal();
         //verificam ca cele doua obiecte sunt la fel
         cartPageSteps.verifyTotals(actual,expected);
-        //nr de produse din cart ramane 0 indiferent cate produse bagam in cart 
+        //nr de produse din cart ramane 0 indiferent cate produse bagam in cart
         cartPageSteps.verifyNrOfProductsFromCart();
+        //click on Proceed to Checkout
+        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
     }
 }

@@ -102,6 +102,14 @@ public class CartPageSteps {
          Integer nrProducts=Integer.parseInt(nrprod);
          Assert.assertFalse(size.equals(nrProducts));
     }
+    @Step
+    public void clickOnWebElem(WebElement e){
+        cartPage.clickOnWebElem(e);
+    }
+    @Step
+    public WebElement getProceedToCheckoutBtn(){
+        return cartPage.getProceedToCheckoutButton();
+    }
 
 }
 

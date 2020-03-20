@@ -20,7 +20,8 @@ public class CartPage extends  AbstractPage{
     @FindBy(css = "#shopping-cart-table > tbody tr")
     private List<WebElementFacade> cartProductsList;
 
-    @FindBy(css = ".button[title*='Proceed']")
+    //@FindBy(css = ".button[title*='Proceed']")
+    @FindBy(css=".checkout-types.top .btn-proceed-checkout")
     private WebElementFacade proceedToCheckoutButton;
 
     @FindBy(css = "#shopping-cart-table > tbody")
@@ -212,8 +213,13 @@ public class CartPage extends  AbstractPage{
     public String getNrOfProductsFromCart(){
         return nrOfProductsFromCart.getText();
     }
+    public void clickOnWebElem(WebElement e){
+        e.click();
+    }
 
-
-    //
+    public WebElementFacade getProceedToCheckoutButton() {
+        return proceedToCheckoutButton;
+    }
+//
 
 }
