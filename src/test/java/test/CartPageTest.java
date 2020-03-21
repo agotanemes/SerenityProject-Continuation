@@ -57,8 +57,9 @@ public class CartPageTest extends BaseTest{
     @Test
     public void getProducts(){
         //produse care se adauga in cos
-        String name2="ELIZABETH KNIT TOP";
+
         String name1="Lafayette Convertible Dress";
+        String name2="ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name2);
         CartProduct cartProduct=productDetailsSteps.addProduct("Pink","S","2");

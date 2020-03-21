@@ -1,5 +1,7 @@
 package test;
 
+import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import com.firestarters.steps.*;
 import com.firestarters.utils.Constants;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
+import java.util.List;
 
 import static net.thucydides.core.steps.stepdata.StepData.withTestDataFrom;
 
@@ -43,7 +46,8 @@ public class CheckoutTest extends BaseTest {
 
     @Steps
     CheckoutPageSteps checkoutPageSteps;
-
+    @Steps
+    HomepageSteps homepageSteps;
     public String searchWord, expectedWordInTitle;
 
     @Test
@@ -73,12 +77,17 @@ public class CheckoutTest extends BaseTest {
     }
     @Test
     public void checkoutTests(){
-        headerSteps.goToProductsPage();
-        productPageSteps.selectAProduct();
-        productDetailsSteps.configureProductAndAddToCart();
-        //give this params : // "Eye" and "eye"
-        cartPageSteps.proceedToCheckout(1);
-        checkoutPageSteps.selectCheckoutMethodAndContinue();
+        String name2="ELIZABETH KNIT TOP";
+        homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
+        productPageSteps.openProduct(name2);
+        CartProduct cartProduct=productDetailsSteps.addProduct("Pink","S","2");
+        productDetailsSteps.clickAddToCartBtn();
+        //click on Proceed to Checkout
+        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+        checkoutPageSteps.selectCheckoutMethod();
+        checkoutPageSteps.selectContinue();
         checkoutPageSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
+        checkoutPageSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","0755096274");
+
     }
 }

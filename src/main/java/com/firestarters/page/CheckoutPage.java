@@ -224,6 +224,12 @@ public class CheckoutPage extends  AbstractPage {
         billingInf.setState(state);
         return billingInf;
     }
+    public WebElement getAsGuestRadioBtn(){
+        return asGuestRadioButton;
+    }
+    public WebElement getContinueBtn(){
+        return continueButton;
+    }
 
 
 
