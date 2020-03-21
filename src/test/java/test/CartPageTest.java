@@ -36,6 +36,8 @@ public class CartPageTest extends BaseTest{
     ProductPageSteps productPageSteps;
     @Steps
     ProductDetailsSteps productDetailsSteps;
+    @Steps
+    CheckoutPageSteps checkoutPageSteps;
 
     @Test
     public void correctSubtotal(){
@@ -82,5 +84,6 @@ public class CartPageTest extends BaseTest{
         cartPageSteps.verifyNrOfProductsFromCart();
         //click on Proceed to Checkout
         cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+        checkoutPageSteps.selectCheckoutMethod();
     }
 }

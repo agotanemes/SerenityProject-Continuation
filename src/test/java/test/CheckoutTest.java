@@ -71,4 +71,14 @@ public class CheckoutTest extends BaseTest {
         checkoutPageSteps.selectCheckoutMethodAndContinue();
         checkoutPageSteps.completeTheCheckoutStepsAndPlaceOrder();
     }
+    @Test
+    public void checkoutTests(){
+        headerSteps.goToProductsPage();
+        productPageSteps.selectAProduct();
+        productDetailsSteps.configureProductAndAddToCart();
+        //give this params : // "Eye" and "eye"
+        cartPageSteps.proceedToCheckout(1);
+        checkoutPageSteps.selectCheckoutMethodAndContinue();
+        checkoutPageSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
+    }
 }
