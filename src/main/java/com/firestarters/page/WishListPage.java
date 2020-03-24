@@ -11,7 +11,8 @@ public class WishListPage extends AbstractPage {
     private WebElementFacade wishListBtn;
     @FindBy(css = "success-msg")
     private WebElementFacade successMsg;
-    @FindBy(css = "#item_198 td:nth-child(3) > div > div > input")
+    //@FindBy(css = "#item_198 td:nth-child(3) > div > div > input")
+    @FindBy(css = ".input-text.qty[name*='qty']")
     private WebElementFacade quantityInput;
     @FindBy(css= "#item_198 button.button-secondary")
     private WebElementFacade updateWishlistFromMyWishlistBtn;

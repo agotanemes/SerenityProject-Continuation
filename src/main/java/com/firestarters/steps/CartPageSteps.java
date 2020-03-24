@@ -115,6 +115,21 @@ public class CartPageSteps {
     public void clickOnWebElem(WebElement element){
         cartPage.clickOnWebElem(element);
     }
+   @Step
+   public WebElement getAccount(){
+        return cartPage.getAccount();
+   }
+   @Step
+    public String getMyCartText(){
+       return cartPage.getMyCartText();
+   }
+   @Step
+    public void verifyCartItemsAreEqualToNrAddedItems(List<CartProduct> product){
+     int sum=cartPage.sumOfQtys(product);
+     String nrOfItemsExp=cartPage.convertIntToString(sum);
+     String accountTextAct=getMyCartText();
+     assertTrue(accountTextAct.contains(nrOfItemsExp));
+   }
 
 }
 

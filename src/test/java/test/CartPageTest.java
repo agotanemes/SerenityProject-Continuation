@@ -42,7 +42,7 @@ public class CartPageTest extends BaseTest{
     @Test
     public void correctSubtotal(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
+        loginSteps.fillCredentials("stanciu_georgiana@yahoo.com","stanciugeorgiana");
         //old values
         //searchPageSteps.addProductFromSearch("eye","eye");
        // searchPageSteps.addProductFromSearch("table","table");
@@ -81,6 +81,9 @@ public class CartPageTest extends BaseTest{
         cartPageSteps.verifyTotals(actual,expected);
         //nr de produse din cart ramane 0 indiferent cate produse bagam in cart
         cartPageSteps.verifyNrOfProductsFromCart();
+        //verificarea faptului ca la Account->My Cart(x items) nr de itemuri este egal cu suma de qty-uri pentru lista de produse adaugate in cos
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyCartItemsAreEqualToNrAddedItems(addedProducts);
 
     }
 }

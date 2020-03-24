@@ -1,6 +1,7 @@
 package test;
 
 
+import com.firestarters.models.User;
 import com.firestarters.steps.LoginSteps;
 import com.firestarters.utils.Constants;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
@@ -18,45 +19,54 @@ public class LoginTest extends BaseTest {
     @Test
     public void loginHappyFlow(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
-        String fName="Manolachi".toLowerCase();
-        String lName="Ioana".toLowerCase();
+        String email="stanciu_georgiana@yahoo.com";
+        String password="stanciugeorgiana";
+        User user=loginSteps.fillCredentials(email,password);
+        loginSteps.clickLogin();
+        String fName="stanciu";
+        String lName="georgiana";
         loginSteps.verifyUserIsLogedIn(fName,lName);
     }
     @Test
     public void loginWithoutUserAndPass(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUserWithEmptyFields();
+        loginSteps.fillCredentials("","");
+        loginSteps.clickLogin();
         loginSteps.verifyMessegesAreDisplayed();
     }
     @Test
     public void loginUserWithEmptyEmailAndWrongPass(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUserWithEmptyEmailAndWrongPass();
+        loginSteps.fillCredentials("","password");
+        loginSteps.clickLogin();
         loginSteps.displayMessageEmailMandatoryField();
     }
     @Test
     public void loginUserWithEmptyEmailAndGoodPass(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUserWithEmptyEmailAndGoodPass();
+        loginSteps.fillCredentials("","stanciugeorgiana");
+        loginSteps.clickLogin();
         loginSteps.displayMessageEmailMandatoryField();
     }
     @Test
     public void loginUserWithEmptyPassAndWrongEmail(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUserWithEmptyPassAndWrongEmail();
+        loginSteps.fillCredentials("nemes_agota@yahoo.com","");
+        loginSteps.clickLogin();
         loginSteps.displayMessagePassMandatoryField();
     }
     @Test
     public void loginUserWithEmptyPassAndGoodEmail(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUserWithEmptyPassAndGoodEmail();
+        loginSteps.fillCredentials("stanciu_georgiana@yahoo.com","");
+        loginSteps.clickLogin();
         loginSteps.displayMessagePassMandatoryField();
     }
     @Test
     public void loginUserWithInvalidCredentials(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginWithInvalidCredentials();
+        loginSteps.fillCredentials("nem_agi_96@yahoo.com","password");
+        loginSteps.clickLogin();
         loginSteps.displayErrorMessage();
     }
 }

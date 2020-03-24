@@ -33,9 +33,10 @@ public class WishListSteps extends ScenarioSteps {
     }
 
     @Step
-    public void clicksOnWishListWhenLoggedIn() {
+    public void clicksOnWishListWhenLoggedIn(String email,String password) {
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
+        loginSteps.fillCredentials(email,password);
+        loginSteps.clickLogin();
         headerSteps.clickOnAccountButton();
         wishListPage.getWishListBtn().click();
         String registerURL = getDriver().getCurrentUrl();

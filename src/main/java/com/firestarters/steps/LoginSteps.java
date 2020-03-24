@@ -12,112 +12,24 @@ import static com.firestarters.utils.Utils.getRandomString;
 
 public class LoginSteps {
     LoginPage loginPage;
-    HeaderPage headerPage;
-    //generate user types
+
     @Step
-    public User generateUser(){
-        User user=new User();
-        user.setEmail("manolachi_ioana@yahoo.com");
-        user.setPass("manolachiioana");
-        return user;
+    public User fillCredentials(String email,String password){
+        return loginPage.fillCredentials(email,password);
     }
+
     @Step
-    public User generateEmptyUser(){
-        User user=new User();
-        user.setEmail("");
-        user.setPass("");
-        return user;
+    public void clickLogin(){
+        loginPage.clickLoginButton();
     }
-    @Step
-    public User generateUserWithEmptyEmailAndWrongPass(){
-        User user=new User();
-        user.setEmail("");
-        user.setPass(getRandomString());
-        return user;
-    }
-    @Step
-    public User generateUserWithEmptyEmailAndGoodPass(){
-        User user=new User();
-        user.setEmail("");
-        user.setPass("manolachiioana");
-        return user;
-    }
-    @Step
-    public User generateUserWithEmptyPassAndWrongEmail(){
-        User user=new User();
-        user.setEmail(getRandomString()+"@gmail.com");
-        user.setPass("");
-        return user;
-    }
-    @Step
-    public User generateUserWithEmptyPassAndGoodEmail(){
-        User user=new User();
-        user.setEmail("manolachi_ioana@gmail.com");
-        user.setPass("");
-        return user;
-    }
-    public User generateNonRegeisteredUser(){
-        User user=new User();
-        user.setEmail("pamparau_roxana@yahoo.com");
-        user.setPass("pamparauroxana");
-        return user;
-    }
-    //---------------------------------------
+
     @Step
     public void navigateToLoginPage(){
         loginPage.open();
     }
     @Step
-    public void fillLoginData(User user){
-        loginPage.typeEmail(user.getEmail());
-        loginPage.typePass(user.getPass());
-    }
-    @Step
-    public void clickLogin(){
-        loginPage.clickLoginButton();
-    }
-    //login scenarious
-    @Step
-    public void loginUser(){
-        //complete Login fields
-        fillLoginData(generateUser());
-        //click Login
-        clickLogin();
-    }
-    @Step
-    public void loginUserWithEmptyFields(){
-        fillLoginData(generateEmptyUser());
-        clickLogin();
-    }
-    @Step
-    public void loginUserWithEmptyEmailAndWrongPass(){
-        fillLoginData(generateUserWithEmptyEmailAndWrongPass());
-        clickLogin();
-    }
-    @Step
-    public void loginUserWithEmptyEmailAndGoodPass(){
-        fillLoginData(generateUserWithEmptyEmailAndGoodPass());
-        clickLogin();
-    }
-    @Step
-    public void loginUserWithEmptyPassAndWrongEmail(){
-        fillLoginData(generateUserWithEmptyPassAndWrongEmail());
-        clickLogin();
-    }
-    @Step
-    public void loginUserWithEmptyPassAndGoodEmail(){
-        fillLoginData(generateUserWithEmptyPassAndGoodEmail());
-        clickLogin();
-    }
-    @Step
-    public void loginWithInvalidCredentials(){
-        fillLoginData(generateNonRegeisteredUser());
-        clickLogin();
-    }
-    //-----------------------------------
-    @Step
     public void verifyUserIsLogedIn(String fName, String lName){
-        String greetMessage = headerPage.getGreetMessage().toLowerCase();
+        String greetMessage = loginPage.getGreetMessage().toLowerCase();
         Assert.assertTrue(greetMessage.contains(fName.toLowerCase()));
         Assert.assertTrue(greetMessage.contains(lName.toLowerCase()));
     }
@@ -144,7 +56,6 @@ public class LoginSteps {
         String errorMessage=loginPage.getErrormessage();
         Assert.assertEquals(errorMessage,"Invalid login or password.");
     }
-
 
 
 }

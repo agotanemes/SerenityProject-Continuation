@@ -45,6 +45,13 @@ public class CartPage extends  AbstractPage{
     @FindBy(css=".count")
     private WebElement nrOfProductsFromCart;
 
+    //@FindBy(css="skip-link ")
+    @FindBy(css=".skip-account>span:nth-child(2)")
+    private WebElement account;
+    @FindBy(css = ".top-link-cart ")
+    private WebElement myCart;
+
+
 //-------------------
   //Ciuverca Ionut
     public int getNumberOfElementsFromCartProductsList(){
@@ -217,6 +224,27 @@ public class CartPage extends  AbstractPage{
     }
     public void clickOnWebElem(WebElement element){
         element.click();
+    }
+    public WebElement getAccount(){
+        return account;
+    }
+    public String getMyCartText(){
+        return myCart.getText();
+    }
+    //pt nr de item-uri de la Accout->My Account(x items)
+    public int sumOfQtys(List<CartProduct>products){
+        int sum=0;
+        for(CartProduct prod:products){
+            String qtyS=prod.getQty();
+            Integer qtyI=Integer.parseInt(qtyS);
+            int qty=qtyI.intValue();
+            sum=sum+qty;
+
+        }
+        return sum;
+    }
+    public String convertIntToString(int nr){
+        return String.valueOf(nr);
     }
 
 }

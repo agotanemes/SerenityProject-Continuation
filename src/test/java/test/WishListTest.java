@@ -26,20 +26,21 @@ public class WishListTest extends BaseTest {
     }
     @Test
     public void verifyMyWishlistPageDisplayedWhenLoggedIn(){
-        wishListSteps.clicksOnWishListWhenLoggedIn();
+        wishListSteps.clicksOnWishListWhenLoggedIn("stanciu_georgiana@yahoo.com","stanciugeorgiana");
     }
 
     @Test
     public void verifyMsgAddedInWishListIsDisplayed() {
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
+        loginSteps.fillCredentials("stanciu_georgiana@yahoo.com","stanciugeorgiana");
+        loginSteps.clickLogin();
         searchPageSteps.addProductFromSearch("dress", "dress");
         wishListSteps.clickOnWishListBtninCart();
         Assert.assertTrue(wishListSteps.getSuccesMsgAddedInWishlist().contains("moved to wishlist Wishlist"));
     }
     @Test
     public void verifyQuantityOfproductInWishlistisUpdated(){
-        wishListSteps.clicksOnWishListWhenLoggedIn();
+        wishListSteps.clicksOnWishListWhenLoggedIn("stanciu_georgiana@yahoo.com","stanciugeorgiana");
         String newQuantity = "7";
         wishListSteps.updateQuantityOfInput(newQuantity);
     }

@@ -42,7 +42,8 @@ public class AccountTest extends BaseTest {
     @Test
     public void testIfMyordersAreCorrect(){
         loginSteps.navigateToLoginPage();
-        loginSteps.loginUser();
+        loginSteps.fillCredentials("stanciu_georgiana@yahoo.com","stanciugeorgiana");
+        loginSteps.clickLogin();
         headerSteps.goToProductsPage();
         productPageSteps.selectAProduct();
         homepageSteps.selectDetails();
