@@ -151,24 +151,12 @@ public class CartPage extends  AbstractPage{
         }
         return products;
     }
-
-    public Double getTotalPriceAsSum() {
-        //product list
-        List<WebElementFacade> productList = getProductList();
-        //Double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
-        //System.out.println("Pretul total e: "+ totalPrice);
-        double total=0;
-        for (WebElementFacade product : productList) {
-            String subtotal = product.findElement(By.cssSelector(" .product-cart-total>span span[class='price']")).getText();
-            Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
-            double correctSubtotalAsdouble = correctSubtotal.doubleValue();
-            total= total+correctSubtotalAsdouble;
-
+    public double getTheSumOfSubtotals(List<CartProduct> producs){
+        double sum=0;
+        for(CartProduct p:producs){
+            sum=sum+p.getSubtotal();
         }
-        Double totalpr=total;
-
-        return totalpr;
-
+        return sum;
     }
 
     public double totalPriceAsDouble(){
@@ -202,9 +190,9 @@ public class CartPage extends  AbstractPage{
      cartTotalPrices.setSubtotal(subtotal);
      return cartTotalPrices;
     }
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(){
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
         CartTotalPrices cartTotalPrices=new CartTotalPrices();
-        double subtotal=getTotalPriceAsSum();
+        double subtotal=getTheSumOfSubtotals(products);
         cartTotalPrices.setSubtotal(subtotal);
         cartTotalPrices.setTax(tax);
         cartTotalPrices.setGrandTotal(tax+subtotal);
@@ -213,13 +201,22 @@ public class CartPage extends  AbstractPage{
     public String getNrOfProductsFromCart(){
         return nrOfProductsFromCart.getText();
     }
-    public void clickOnWebElem(WebElement e){
-        e.click();
-    }
+
 
     public WebElementFacade getProceedToCheckoutButton() {
         return proceedToCheckoutButton;
     }
-//
+   //for order review from checkout
+
+    public CartTotalPrices getTotalPricesForOrderReview(List<CartProduct> products){
+        CartTotalPrices cartTotalPrices=new CartTotalPrices();
+        cartTotalPrices.setSubtotal(getTheSumOfSubtotals(products));
+        cartTotalPrices.setTax(0);
+        cartTotalPrices.setGrandTotal(cartTotalPrices.getSubtotal());
+        return cartTotalPrices;
+    }
+    public void clickOnWebElem(WebElement element){
+        element.click();
+    }
 
 }

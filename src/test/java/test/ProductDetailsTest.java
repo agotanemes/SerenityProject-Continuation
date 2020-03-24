@@ -49,10 +49,10 @@ public class ProductDetailsTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct2);
 
-        //verificare ca prodisele adaugate sunt aceleasi cu cele din cart
+        //lista din cart
         List<CartProduct> productsFromCart=cartPageSteps.getProducts();
+        //verificam ca produsele din cart sunt aceleasi cu cele pe care la-am introdus
         productDetailsSteps.verifyTwoCartListsAreEqual(products,productsFromCart);
-        //cartPageSteps.verifyIfTotalPriceIsCorrect();
 
 
     }

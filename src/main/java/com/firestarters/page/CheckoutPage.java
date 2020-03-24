@@ -1,16 +1,24 @@
 package com.firestarters.page;
 
 import com.firestarters.models.BillingInf;
+import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import com.firestarters.models.ShippingInform;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
+import static com.firestarters.utils.Utils.convertStringToDouble;
+import static com.firestarters.utils.Utils.stringReplace;
 import static org.junit.Assert.assertTrue;
 
 
@@ -46,7 +54,8 @@ public class CheckoutPage extends  AbstractPage {
     @FindBy(css = "#shipping\\:firstname")
     private  WebElementFacade shippingFirstNameLabel;
 
-    @FindBy(css = "#shipping-new-address-form select[title='Country']")
+    //@FindBy(css = "#shipping-new-address-form select[title='Country']")
+    @FindBy(css="select[name*='shipping'][title='Country']")
     private WebElementFacade shippingConuntryDropdown;
 
     @FindBy(css = "#shipping\\:region_id")
@@ -75,6 +84,14 @@ public class CheckoutPage extends  AbstractPage {
 
     @FindBy(css = ".page-title >h1")
     private WebElementFacade checkoutPageTitle;
+
+    //Order review
+    @FindBy(css="#checkout-review-table>tbody>tr")
+    private List<WebElement> orderReviewProducts;
+    @FindBy(css = "button[title='Place Order']")
+    private WebElement placeOrderBtn;
+    @FindBy(css="#checkout-review-table>tfoot td:nth-child(2)")
+    private List<WebElement> totalPrices;
 
 
     public WebElement getInputByTitle(String title){
@@ -171,7 +188,7 @@ public class CheckoutPage extends  AbstractPage {
     }
     //Agota 20.03.2020
 
-    public ShippingInform fillRequestedFieldsForShipping(String firstN,String lastN,String strAddr,String city,String zip,String tel){
+    public ShippingInform fillRequestedFieldsForShipping(String firstN,String lastN,String strAddr,String city,String zip,String tel,String country,String state){
         //complete the fields
         getInputByTitle("First Name").sendKeys(firstN);
         getInputByTitle("Last Name").sendKeys(lastN);
@@ -179,6 +196,12 @@ public class CheckoutPage extends  AbstractPage {
         getInputByTitle("City").sendKeys(city);
         getInputByTitle("Zip/Postal Code").sendKeys(zip);
         getInputByTitle("Telephone").sendKeys(tel);
+        clickOnWebElem(shippingConuntryDropdown);
+        Select shippingCountrySelect = new Select(shippingConuntryDropdown);
+        shippingCountrySelect.selectByVisibleText(country);
+        clickOnWebElem(shippingStateDropdown);
+        Select shippingStateSelect = new Select(shippingStateDropdown);
+        shippingStateSelect.selectByVisibleText(state);
         //set the shiping inf in the shipininf obj.
         ShippingInform shippingInform=new ShippingInform();
         shippingInform.setFirstName(firstN);
@@ -187,6 +210,11 @@ public class CheckoutPage extends  AbstractPage {
         shippingInform.setCity(city);
         shippingInform.setZip(zip);
         shippingInform.setTelephone(tel);
+        shippingInform.setCountry(country);
+        shippingInform.setState(state);
+        shippingTabContinueButton.click();
+        //withTimeoutOf(Duration.ofSeconds(15)).waitFor(flatRateLabel);
+        waitForWebElem(flatRateLabel);
         return shippingInform;
     }
     public void clickOnWebElem(WebElement element){
@@ -210,7 +238,9 @@ public class CheckoutPage extends  AbstractPage {
         stateSelect.selectByVisibleText(state);
         clickOnWebElem(shippingToThisAddressRadioBtn);
         clickOnWebElem(billingTabContinueButton);
-        withTimeoutOf(Duration.ofSeconds(5)).waitFor(shippingFirstNameLabel);
+        //waitFor(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#shipping\\:firstname")));
+        //withTimeoutOf(Duration.ofSeconds(60)).waitFor(shippingFirstNameLabel);
+        waitForWebElem(shippingFirstNameLabel);
         BillingInf billingInf=new BillingInf();
         billingInf.setFirstN(firstN);
         billingInf.setMiddleN(middleN);
@@ -230,7 +260,58 @@ public class CheckoutPage extends  AbstractPage {
     public WebElement getContinueBtn(){
         return continueButton;
     }
+    public void selectShippingMet(){
+        clickOnWebElem(shippingMethodRadioButton);
+        clickOnWebElem(shippingMethodContinueButton);
+        //withTimeoutOf(Duration.ofSeconds(10)).waitFor(paymentContinueButton);
+        waitForWebElem(paymentContinueButton);
+        paymentContinueButton.click();
+        //withTimeoutOf(Duration.ofSeconds(20)).waitFor(placeOrderBtn);
+        waitForWebElem(placeOrderBtn);
 
+    }
+    public void clickPlaceOrder(){
+        clickOnWebElem(placeOrderButton);
+        withTimeoutOf(Duration.ofSeconds(10));
+    }
+    public List<CartProduct> getOrderReviewProd(){
+        List<CartProduct> cartProducts=new ArrayList<>();
+        List<WebElement> orderReviewprod= orderReviewProducts;
+        for(WebElement prod:orderReviewprod){
+            CartProduct cartProduct=new CartProduct();
+            String name=prod.findElement(By.cssSelector(".product-name")).getText();
+            String color=prod.findElement(By.cssSelector("dd:nth-child(2)")).getText();
+            String size=prod.findElement(By.cssSelector("dd:nth-child(4)")).getText();
+            String price=prod.findElement(By.cssSelector("td[data-rwd-label='Price']")).getText();
+            Double correctPrice = convertStringToDouble(stringReplace(price));
+            double priceAsdouble = correctPrice.doubleValue();
+            String qty=prod.findElement(By.cssSelector("td[data-rwd-label='Qty']")).getText();
+            String subtotal=prod.findElement(By.cssSelector("td[data-rwd-label='Subtotal']")).getText();
+            Double correctSub=convertStringToDouble(stringReplace(subtotal));
+            double subtotalAsDouble=correctSub.doubleValue();
+            cartProduct.setName(name);
+            cartProduct.setColor(color);
+            cartProduct.setSize(size);
+            cartProduct.setPrice(priceAsdouble);
+            cartProduct.setQty(qty);
+            cartProduct.setSubtotal(subtotalAsDouble);
+            cartProducts.add(cartProduct);
+        }
+        return cartProducts;
+    }
+    public CartTotalPrices getOrderReviewTotals(){
+        CartTotalPrices cartTotalPrices=new CartTotalPrices();
+        String subtotal=totalPrices.get(0).getText();
+        String tax=totalPrices.get(1).getText();
+        String grandTotal=totalPrices.get(2).getText();
+        double dSubtotal=convertStringToDouble(stringReplace(subtotal));
+        double dTax=convertStringToDouble(stringReplace(tax));
+        double dGrandTotal=convertStringToDouble(stringReplace(grandTotal));
+        cartTotalPrices.setGrandTotal(dGrandTotal);
+        cartTotalPrices.setTax(dTax);
+        cartTotalPrices.setSubtotal(dSubtotal);
+        return cartTotalPrices;
+    }
 
 
 

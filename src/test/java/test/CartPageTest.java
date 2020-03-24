@@ -38,7 +38,7 @@ public class CartPageTest extends BaseTest{
     ProductDetailsSteps productDetailsSteps;
     @Steps
     CheckoutPageSteps checkoutPageSteps;
-
+    List<CartProduct> addedProducts=new ArrayList<>();
     @Test
     public void correctSubtotal(){
         loginSteps.navigateToLoginPage();
@@ -58,33 +58,29 @@ public class CartPageTest extends BaseTest{
     public void getProducts(){
         //produse care se adauga in cos
 
-        String name1="Lafayette Convertible Dress";
+
         String name2="ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name2);
         CartProduct cartProduct=productDetailsSteps.addProduct("Pink","S","2");
         productDetailsSteps.clickAddToCartBtn();
+        addedProducts.add(cartProduct);
 
+        String name1="Lafayette Convertible Dress";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","2");
         productDetailsSteps.clickAddToCartBtn();
+        addedProducts.add(cartProduct1);
 
-        List<CartProduct> products=cartPageSteps.getProducts();
-        System.out.println("Products from cart:");
-        for(CartProduct product:products){
-            System.out.println(product.getName()+" "+product.getColor()+" "+product.getSize()+" "+product.getQty()+" "+product.getPrice()+" "+product.getSubtotal());
-        }
-        //un obiect care are calculate grand total,subtotal si tax
-        CartTotalPrices actual=cartPageSteps.calculatePricesThatComposeGrandTotal();
+        //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
+        CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts);
         //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
-        CartTotalPrices expected=cartPageSteps.getPricesThatComposeGrangTotal();
+        CartTotalPrices actual=cartPageSteps.getPricesThatComposeGrangTotal();
         //verificam ca cele doua obiecte sunt la fel
         cartPageSteps.verifyTotals(actual,expected);
         //nr de produse din cart ramane 0 indiferent cate produse bagam in cart
         cartPageSteps.verifyNrOfProductsFromCart();
-        //click on Proceed to Checkout
-        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
-        checkoutPageSteps.selectCheckoutMethod();
+
     }
 }

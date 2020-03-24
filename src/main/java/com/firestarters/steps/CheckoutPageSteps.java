@@ -1,9 +1,14 @@
 package com.firestarters.steps;
 
 import com.firestarters.models.BillingInf;
+import com.firestarters.models.CartProduct;
+import com.firestarters.models.CartTotalPrices;
 import com.firestarters.models.ShippingInform;
 import com.firestarters.page.CheckoutPage;
 import net.thucydides.core.annotations.Step;
+import org.intellij.lang.annotations.JdkConstants;
+
+import java.util.List;
 
 public class CheckoutPageSteps {
 
@@ -32,12 +37,28 @@ public class CheckoutPageSteps {
 
     }
     @Step
-    public ShippingInform fillRequestedFieldsForShipping(String firstN,String lastN,String strAddr,String city,String zip,String tel){
-        return checkoutPage.fillRequestedFieldsForShipping(firstN,lastN,strAddr,city,zip,tel);
+    public ShippingInform fillRequestedFieldsForShipping(String firstN,String lastN,String strAddr,String city,String zip,String tel,String country,String state){
+        return checkoutPage.fillRequestedFieldsForShipping(firstN,lastN,strAddr,city,zip,tel,country,state);
     }
     @Step
     public void selectContinue(){
         checkoutPage.clickOnWebElem(checkoutPage.getContinueBtn());
+    }
+    @Step
+    public void selectShippingMet(){
+        checkoutPage.selectShippingMet();
+    }
+    @Step
+    public void clickPlaceOrder(){
+        checkoutPage.clickPlaceOrder();
+    }
+    @Step
+    public List<CartProduct> getOrderReviewProducts(){
+        return checkoutPage.getOrderReviewProd();
+    }
+    @Step
+    public CartTotalPrices getOrderReviewTotals(){
+        return checkoutPage.getOrderReviewTotals();
     }
 
 }

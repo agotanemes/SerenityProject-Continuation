@@ -79,8 +79,8 @@ public class CartPageSteps {
         return cartTotalPrices;
     }
     @Step
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(){
-        return cartPage.calculatePricesThatComposeGrandTotal();
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
+        return cartPage.calculatePricesThatComposeGrandTotal(products);
     }
     @Step
     public void verifyTotals(CartTotalPrices actual,CartTotalPrices expected){
@@ -102,13 +102,18 @@ public class CartPageSteps {
          Integer nrProducts=Integer.parseInt(nrprod);
          Assert.assertFalse(size.equals(nrProducts));
     }
-    @Step
-    public void clickOnWebElem(WebElement e){
-        cartPage.clickOnWebElem(e);
-    }
+
     @Step
     public WebElement getProceedToCheckoutBtn(){
         return cartPage.getProceedToCheckoutButton();
+    }
+    @Step
+    public CartTotalPrices getTotalPricesForOrderReview(List<CartProduct> products){
+        return cartPage.getTotalPricesForOrderReview(products);
+    }
+    @Step
+    public void clickOnWebElem(WebElement element){
+        cartPage.clickOnWebElem(element);
     }
 
 }
