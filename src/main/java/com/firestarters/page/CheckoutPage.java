@@ -17,8 +17,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.firestarters.utils.Utils.convertStringToDouble;
-import static com.firestarters.utils.Utils.stringReplace;
+import static com.firestarters.utils.Utils.*;
 import static org.junit.Assert.assertTrue;
 
 
@@ -92,6 +91,10 @@ public class CheckoutPage extends  AbstractPage {
     private WebElement placeOrderBtn;
     @FindBy(css="#checkout-review-table>tfoot td:nth-child(2)")
     private List<WebElement> totalPrices;
+    //Billing completed inf from right
+    @FindBy(css="#billing-progress-opcheckout>dd[class='complete']>address")
+    //@FindBy(css = "#billing-progress-opcheckout address>br:nth-child(1)")
+    private WebElement billingCompletedInf;
 
 
     public WebElement getInputByTitle(String title){
@@ -311,6 +314,15 @@ public class CheckoutPage extends  AbstractPage {
         cartTotalPrices.setTax(dTax);
         cartTotalPrices.setSubtotal(dSubtotal);
         return cartTotalPrices;
+    }
+    //Billing completed information from right side
+    public String getBillingCompletedInf(){
+        String s=billingCompletedInf.getText();
+        return billingCompletedInf.getText();
+    }
+    public String[] splitedByEnter(String s){
+        String[] slitedStr= splitByEnter(s);
+        return slitedStr;
     }
 
 

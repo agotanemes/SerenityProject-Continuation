@@ -167,7 +167,9 @@ public class CartPage extends  AbstractPage{
     }
 
     public double totalPriceAsDouble(){
-        double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+
+        //double totalPrice=convertStringToDouble(stringReplace(getTotalPrice().getText()));
+        double totalPrice=extractNumberFromString(getTotalPrice().getText());
         return totalPrice;
     }
 

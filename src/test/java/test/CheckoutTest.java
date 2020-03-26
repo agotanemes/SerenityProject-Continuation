@@ -93,7 +93,7 @@ public class CheckoutTest extends BaseTest {
         String name1="Lafayette Convertible Dress";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
-        CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","2");
+        CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","6","1");
         addedProducts.add(cartProduct1);
         productDetailsSteps.clickAddToCartBtn();
 
@@ -112,6 +112,12 @@ public class CheckoutTest extends BaseTest {
         CartTotalPrices expected=cartPageSteps.getTotalPricesForOrderReview(addedProducts);
         CartTotalPrices actual=checkoutPageSteps.getOrderReviewTotals();
         cartPageSteps.verifyTotals(actual,expected);
+        System.out.println(checkoutPageSteps.getBillingCompletedInf());
+        String s=checkoutPageSteps.getBillingCompletedInf();
+        String[] splitStr=checkoutPageSteps.splitByEnter(s);
+        //System.out.println("size"+splitStr.length);
+        System.out.println("name: "+splitStr[0]);
+        System.out.println(splitStr.length);
         checkoutPageSteps.clickPlaceOrder();
 
     }

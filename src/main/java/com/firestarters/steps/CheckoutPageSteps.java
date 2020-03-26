@@ -60,5 +60,14 @@ public class CheckoutPageSteps {
     public CartTotalPrices getOrderReviewTotals(){
         return checkoutPage.getOrderReviewTotals();
     }
+    //Billing completed inf from right part
+    @Step
+    public String getBillingCompletedInf() {
+    return checkoutPage.getBillingCompletedInf();
+    }
+    @Step
+    public String[] splitByEnter(String s){
+        return checkoutPage.splitedByEnter(s);
+    }
 
 }
