@@ -1,6 +1,7 @@
 package com.firestarters.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
+//import org.jcp.xml.dsig.internal.SignerOutputStream;
 
 public class Utils {
     //generate random string
@@ -29,21 +30,40 @@ public class Utils {
        System.out.println(nr);
         return nr;
    }
-   public static String[] splitString(String str){
+   public static String extractNumberFromStrinAsString(String str){
+       String stripedValue = (str.replaceAll("[\\s+a-zA-Z :]",""));
+       String stringValue1=stripedValue.replace(":","");
+       return stringValue1;
+   }
+   public static String[] splitStringBySpace(String str){
        String[] splited = str.split("\\s+");
        return splited;
+   }
+   public static String[] splitStringByComma(String str){
+        String[] splited=str.split(",");
+        return splited;
+   }
+   public static String eliminateStaces(String s){
+        return s.replace(" ","");
    }
 
     public static void main(String[] args) {
         String stringToStrip="radius: -0.118,$211 zone";
         extractNumberFromString(stringToStrip);
         String str = "Hello I'm your String";
-        String [] splited=splitString(str);
+        String [] splited=splitStringBySpace(str);
         for(int i=0;i<splited.length;i++){
             System.out.println(splited[i]);
         }
         String[] splitEnter=splitByEnter(str);
         System.out.println(splitEnter.length);
+        String tel=extractNumberFromStrinAsString("T: 0755096274");
+        System.out.println(tel);
+        System.out.println(tel.length());
+        String bycomma="agi ,bla ,bla ,bla";
+        System.out.println((splitStringByComma(bycomma)).length);
+        String[] splitcomma=splitStringByComma(bycomma);
+        System.out.println(splitcomma[0].length());
 
     }
     public static String[] splitByEnter(String s){

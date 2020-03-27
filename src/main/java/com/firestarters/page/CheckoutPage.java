@@ -93,8 +93,11 @@ public class CheckoutPage extends  AbstractPage {
     private List<WebElement> totalPrices;
     //Billing completed inf from right
     @FindBy(css="#billing-progress-opcheckout>dd[class='complete']>address")
-    //@FindBy(css = "#billing-progress-opcheckout address>br:nth-child(1)")
     private WebElement billingCompletedInf;
+    //Shipping completed inf from right
+    @FindBy(css="#shipping-progress-opcheckout>dd[class='complete']>address")
+    private WebElement shippingCompletedInf;
+
 
 
     public WebElement getInputByTitle(String title){
@@ -251,10 +254,10 @@ public class CheckoutPage extends  AbstractPage {
         billingInf.setEmailAdr(email);
         billingInf.setAddress(adress);
         billingInf.setCity(city);
-        billingInf.setZip(zip);
+        billingInf.setZip(eliminateStaces(zip));
         billingInf.setTelephone(tel);
         billingInf.setCountry(country);
-        billingInf.setState(state);
+        billingInf.setState(eliminateStaces(state));
         return billingInf;
     }
     public WebElement getAsGuestRadioBtn(){
@@ -318,11 +321,84 @@ public class CheckoutPage extends  AbstractPage {
     //Billing completed information from right side
     public String getBillingCompletedInf(){
         String s=billingCompletedInf.getText();
-        return billingCompletedInf.getText();
+        return s;
     }
     public String[] splitedByEnter(String s){
         String[] slitedStr= splitByEnter(s);
         return slitedStr;
+    }
+    public BillingInf getBillingCompletedInfAsObj(){
+        BillingInf billingInf=new BillingInf();
+        String billingInfStr=getBillingCompletedInf();
+        String[] billingInfComp=splitedByEnter(billingInfStr);
+
+        String firstNAndMidNAndLastN=billingInfComp[0];
+        String[] text1=splitStringBySpace(firstNAndMidNAndLastN);
+        String fName=text1[0];
+        String mName=text1[1];
+        String lName=text1[2];
+
+        String adress=billingInfComp[1];
+
+        String cityStateAndZip=billingInfComp[2];
+        String[] text2=splitStringByComma(cityStateAndZip);
+        String city=text2[0];
+        String state=text2[1];
+        String zip=text2[2].replace(" ","");
+
+        String country=billingInfComp[3];
+
+        String telephone=billingInfComp[4];
+        String tel=extractNumberFromStrinAsString(telephone);
+
+        billingInf.setFirstN(fName);
+        billingInf.setMiddleN(mName);
+        billingInf.setLastN(lName);
+        billingInf.setState(eliminateStaces(state));
+        billingInf.setCountry(country);
+        billingInf.setCity(city);
+        billingInf.setAddress(adress);
+        billingInf.setZip(zip);
+        billingInf.setTelephone(tel);
+        return billingInf;
+    }
+    //Shipping completed Inf from right
+    public String getShippingCompletedInf(){
+        return shippingCompletedInf.getText();
+    }
+    public ShippingInform getShippingCompletedInfAsObj(){
+        ShippingInform shippingInf=new ShippingInform();
+        String shippingInfStr=getShippingCompletedInf();
+        String[] billingInfComp=splitedByEnter(shippingInfStr);
+
+        String firstNAndMidNAndLastN=billingInfComp[0];
+        String[] text1=splitStringBySpace(firstNAndMidNAndLastN);
+        String fName=text1[0];
+        String lName=text1[1];
+
+        String adress=billingInfComp[1];
+
+        String cityStateAndZip=billingInfComp[2];
+        String[] text2=splitStringByComma(cityStateAndZip);
+        String city=text2[0];
+        String state=text2[1];
+        String zip=text2[2].replace(" ","");
+
+        String country=billingInfComp[3];
+
+        String telephone=billingInfComp[4];
+        String tel=extractNumberFromStrinAsString(telephone);
+
+        shippingInf.setFirstName(fName);
+        shippingInf.setLastName(lName);
+        shippingInf.setState(eliminateStaces(state));
+        shippingInf.setCountry(country);
+        shippingInf.setCity(city);
+        shippingInf.setStreetAddr(adress);
+        shippingInf.setZip(zip);
+        shippingInf.setTelephone(tel);
+        return shippingInf;
+
     }
 
 

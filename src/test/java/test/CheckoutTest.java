@@ -1,7 +1,9 @@
 package test;
 
+import com.firestarters.models.BillingInf;
 import com.firestarters.models.CartProduct;
 import com.firestarters.models.CartTotalPrices;
+import com.firestarters.models.ShippingInform;
 import com.firestarters.page.CartPage;
 import com.firestarters.steps.*;
 import com.firestarters.utils.Constants;
@@ -101,8 +103,8 @@ public class CheckoutTest extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
         checkoutPageSteps.selectCheckoutMethod();
         checkoutPageSteps.selectContinue();
-        checkoutPageSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
-        checkoutPageSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
+        BillingInf expectedBilling=checkoutPageSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
+        ShippingInform expectedShipping=checkoutPageSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
         checkoutPageSteps.selectShippingMet();
         //product from order review
         List<CartProduct> products=checkoutPageSteps.getOrderReviewProducts();
@@ -112,12 +114,13 @@ public class CheckoutTest extends BaseTest {
         CartTotalPrices expected=cartPageSteps.getTotalPricesForOrderReview(addedProducts);
         CartTotalPrices actual=checkoutPageSteps.getOrderReviewTotals();
         cartPageSteps.verifyTotals(actual,expected);
-        System.out.println(checkoutPageSteps.getBillingCompletedInf());
-        String s=checkoutPageSteps.getBillingCompletedInf();
-        String[] splitStr=checkoutPageSteps.splitByEnter(s);
-        //System.out.println("size"+splitStr.length);
-        System.out.println("name: "+splitStr[0]);
-        System.out.println(splitStr.length);
+        //verificare ca datele introduse la billing sunt aceleasi ca si cele care apar in partea dr
+        BillingInf actualBilling =checkoutPageSteps.getBillingCompletedInfAsObj();
+        //System.out.println(actualBilling.getFirstN()+" "+actualBilling.getMiddleN()+" "+actualBilling.getLastN()+" "+actualBilling.getAddress()+" "+actualBilling.getCity()+" "+actualBilling.getState()+" "+actualBilling.getZip()+" "+actualBilling.getCountry()+" "+actualBilling.getTelephone());
+        checkoutPageSteps.verifyIfBillingObjAreEqual(actualBilling,expectedBilling);
+        //verificare ca datele introduse la shipping sunt aceleasi ca si cele care apar in partea dr
+        ShippingInform actualShipping=checkoutPageSteps.getShippingCompletedInfAsObj();
+        checkoutPageSteps.verifyIfShippingObjAreEquals(actualShipping,expectedShipping);
         checkoutPageSteps.clickPlaceOrder();
 
     }
