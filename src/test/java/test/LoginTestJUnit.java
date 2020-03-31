@@ -48,4 +48,15 @@ public class LoginTestJUnit {
         Assert.assertEquals(successCode, "OPERATION_SUCCESS");
     }
 
+    @Test
+    public void AuthenticationBasics()
+    {
+        RestAssured.baseURI = "http://qa2.dev.evozon.com/customer/account/login/";
+        RequestSpecification request = RestAssured.given();
+
+        Response response = request.get();
+        System.out.println("Status code: " + response.getStatusCode());
+        System.out.println("Status message " + response.body().asString());
+    }
+
 }
