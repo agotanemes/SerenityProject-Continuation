@@ -79,8 +79,8 @@ public class CartPageSteps {
         return cartTotalPrices;
     }
     @Step
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
-        return cartPage.calculatePricesThatComposeGrandTotal(products);
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products,double tax){
+        return cartPage.calculatePricesThatComposeGrandTotal(products,tax);
     }
     @Step
     public void verifyTotals(CartTotalPrices actual,CartTotalPrices expected){
@@ -130,6 +130,24 @@ public class CartPageSteps {
      String accountTextAct=getMyCartText();
      assertTrue(accountTextAct.contains(nrOfItemsExp));
    }
+   //delete specified product from cart
+    @Step
+   public void deleteProductFromCart(String name){
+        cartPage.deleteProductFromCart(name);
+   }
+   //stergerea unui anumit produs din lista de produse introduse in cart
+    @Step
+   public void removeProductFromAddedProdList(String name,List<CartProduct> products){
+        cartPage.removeProductFromAddedProdList(name,products);
+   }
+   @Step
+    public void modifyProductFromCart(String name,String value){
+        cartPage.modifyProductQtyFromCart(name,value);
+    }
+    @Step
+    public void modifyProductQty(String name,String value,List<CartProduct> products){
+        cartPage.modifyProductQty(name,value,products);
+    }
 
 }
 

@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import static com.firestarters.utils.Utils.*;
@@ -41,7 +42,6 @@ public class CartPage extends  AbstractPage{
     private WebElement totalPrice;
     //@FindBy(css=".a-right span[class='price']")
     //private List<WebElement> totalPriceList;
-    final double tax=90.75;
     @FindBy(css=".count")
     private WebElement nrOfProductsFromCart;
 
@@ -199,7 +199,7 @@ public class CartPage extends  AbstractPage{
      cartTotalPrices.setSubtotal(subtotal);
      return cartTotalPrices;
     }
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products,double tax){
         CartTotalPrices cartTotalPrices=new CartTotalPrices();
         double subtotal=getTheSumOfSubtotals(products);
         cartTotalPrices.setSubtotal(subtotal);
@@ -247,6 +247,56 @@ public class CartPage extends  AbstractPage{
     }
     public String convertIntToString(int nr){
         return String.valueOf(nr);
+    }
+
+    //remove product from cart
+    public void removeProductFromAddedProdList(String name,List<CartProduct> products){
+        int poz=-1;
+        for(int i=0;i< products.size();i++){
+            if (products.get(i).getName().equals(name)){
+                poz=i;
+            }
+        }
+        products.remove(poz);
+    }
+    public void deleteProductFromCart(String name){
+        List<WebElementFacade> productFromCart=getProductList();
+        for(WebElementFacade prod:productFromCart){
+            String productName=prod.findElement(By.cssSelector(" .product-name>a")).getText();
+
+            if(productName.equals(name)){
+                prod.findElement(By.cssSelector("td[class='a-center product-cart-remove last']>a")).click();
+
+                break;
+            }
+            withTimeoutOf(Duration.ofSeconds(20));
+        }
+    }
+    public void modifyProductQtyFromCart(String name,String value){
+        List<WebElementFacade> productFromCart=getProductList();
+        for(WebElementFacade prod:productFromCart) {
+            String productName=prod.findElement(By.cssSelector(" .product-name>a")).getText();
+            if(productName.equals(name)){
+                prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).clear();
+                prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).sendKeys(value);
+                prod.findElement(By.cssSelector("button[class='button btn-update']")).click();
+
+            }
+
+        }
+
+    }
+    public void modifyProductQty(String name,String value,List<CartProduct> products) {
+        for (CartProduct prod : products) {
+            String productName = prod.getName();
+            if (productName.equals(name)) {
+                prod.setQty(value);
+                //modifica si subtotalul
+                //prod.setSubtotal();
+                break;
+            }
+
+        }
     }
 
 }

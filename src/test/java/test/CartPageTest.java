@@ -39,6 +39,9 @@ public class CartPageTest extends BaseTest{
     @Steps
     CheckoutPageSteps checkoutPageSteps;
     List<CartProduct> addedProducts=new ArrayList<>();
+    final double tax=90.75;
+    final double taxAfterDelete=34.65;
+    final double taxAftermodify=51.98;
     @Test
     public void correctSubtotal(){
         loginSteps.navigateToLoginPage();
@@ -69,12 +72,12 @@ public class CartPageTest extends BaseTest{
         String name1="Lafayette Convertible Dress";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
-        CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","2","2");
+        CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","6","2");
         productDetailsSteps.clickAddToCartBtn();
         addedProducts.add(cartProduct1);
 
         //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
-        CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts);
+        CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,tax);
         //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
         CartTotalPrices actual=cartPageSteps.getPricesThatComposeGrangTotal();
         //verificam ca cele doua obiecte sunt la fel
@@ -84,6 +87,33 @@ public class CartPageTest extends BaseTest{
         //verificarea faptului ca la Account->My Cart(x items) nr de itemuri este egal cu suma de qty-uri pentru lista de produse adaugate in cos
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyCartItemsAreEqualToNrAddedItems(addedProducts);
+        //DELETE+VERIFICATIONS
+        //delete product from cart
+        cartPageSteps.deleteProductFromCart("LAFAYETTE CONVERTIBLE DRESS");
+        //stergere produs din lista de produse introduse in cart
+        cartPageSteps.removeProductFromAddedProdList("LAFAYETTE CONVERTIBLE DRESS",addedProducts);
+        //verificarea faptului ca listele sunt egale dupa stergere
+        List<CartProduct> cartProducts=cartPageSteps.getProducts();
+        productDetailsSteps.verifyTwoCartListsAreEqual(cartProducts,addedProducts);
+        //verificare totaluri
+        //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
+        CartTotalPrices expectedAfterDelete=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,taxAfterDelete);
+        //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
+        CartTotalPrices actualAfterDelete=cartPageSteps.getPricesThatComposeGrangTotal();
+        cartPageSteps.verifyTotals(actualAfterDelete,expectedAfterDelete);
+        //modify
+        cartPageSteps.modifyProductFromCart("ELIZABETH KNIT TOP","3");
+        cartPageSteps.modifyProductQty("ELIZABETH KNIT TOP","3",addedProducts);
+        List<CartProduct> cartProductsAfterChanges=cartPageSteps.getProducts();
+        productDetailsSteps.verifyTwoCartListsAreEqual(cartProductsAfterChanges,addedProducts);
+        //verificare totaluri
+        //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
+        CartTotalPrices expectedAfterModify=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,taxAftermodify);
+        //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
+        CartTotalPrices actualAfterModify=cartPageSteps.getPricesThatComposeGrangTotal();
+        cartPageSteps.verifyTotals(actualAfterModify,expectedAfterModify);
+
+
 
     }
 }
