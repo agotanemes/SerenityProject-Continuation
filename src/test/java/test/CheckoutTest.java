@@ -106,7 +106,7 @@ public class CheckoutTest extends BaseTest {
         BillingInf expectedBilling=checkoutPageSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
         ShippingInform expectedShipping=checkoutPageSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
         checkoutPageSteps.selectShippingMet();
-        //product from order review
+        //products from order review
         List<CartProduct> products=checkoutPageSteps.getOrderReviewProducts();
         //verificare ca lista de produse adaugate in cart este aceeasi cu cea din order review de la checkout
         productDetailsSteps.verifyTwoCartListsAreEqual(products,addedProducts);

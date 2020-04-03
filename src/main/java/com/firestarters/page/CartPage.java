@@ -291,6 +291,9 @@ public class CartPage extends  AbstractPage{
             String productName = prod.getName();
             if (productName.equals(name)) {
                 prod.setQty(value);
+                double qty=convertStringToDouble(prod.getQty());
+                double price=prod.getPrice();
+                prod.setSubtotal(qty*price);
                 //modifica si subtotalul
                 //prod.setSubtotal();
                 break;

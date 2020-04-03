@@ -87,7 +87,8 @@ public class CartPageTest extends BaseTest{
         //verificarea faptului ca la Account->My Cart(x items) nr de itemuri este egal cu suma de qty-uri pentru lista de produse adaugate in cos
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyCartItemsAreEqualToNrAddedItems(addedProducts);
-        //DELETE+VERIFICATIONS
+
+        //DELETE+Verificari
         //delete product from cart
         cartPageSteps.deleteProductFromCart("LAFAYETTE CONVERTIBLE DRESS");
         //stergere produs din lista de produse introduse in cart
