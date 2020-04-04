@@ -39,9 +39,12 @@ public class CartPageTest extends BaseTest{
     @Steps
     CheckoutPageSteps checkoutPageSteps;
     List<CartProduct> addedProducts=new ArrayList<>();
-    final double tax=90.75;
+    /*final double tax=90.75;
     final double taxAfterDelete=34.65;
-    final double taxAftermodify=51.98;
+    final double taxAftermodify=51.98;*/
+    final double tax=95.70;
+    final double taxAfterDelete=39.60;
+    final double taxAftermodify=56.93;
     @Test
     public void correctSubtotal(){
         loginSteps.navigateToLoginPage();
@@ -75,6 +78,13 @@ public class CartPageTest extends BaseTest{
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","6","2");
         productDetailsSteps.clickAddToCartBtn();
         addedProducts.add(cartProduct1);
+
+        String name="TORI TANK";
+        homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
+        productPageSteps.openProduct(name);
+        CartProduct cartProduct2=productDetailsSteps.addProduct("Indigo","M","1");
+        productDetailsSteps.clickAddToCartBtn();
+        addedProducts.add(cartProduct2);
 
         //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
         CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,tax);
@@ -113,6 +123,17 @@ public class CartPageTest extends BaseTest{
         //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
         CartTotalPrices actualAfterModify=cartPageSteps.getPricesThatComposeGrangTotal();
         cartPageSteps.verifyTotals(actualAfterModify,expectedAfterModify);
+        //minicart
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        List<CartProduct> minicartProducts=cartPageSteps.getMiniCartRecentlyAddedProd();
+        for(CartProduct p:minicartProducts){
+            System.out.println("index ");
+            System.out.println(p.getName());
+            System.out.println(p.getQty());
+            System.out.println(p.getPrice());
+            System.out.println(p.getSubtotal());
+        }
+        cartPageSteps.checkCartListContainsAnotherCartList(minicartProducts,addedProducts);
 
 
 

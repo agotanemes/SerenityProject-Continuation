@@ -50,6 +50,11 @@ public class CartPage extends  AbstractPage{
     private WebElement account;
     @FindBy(css = ".top-link-cart ")
     private WebElement myCart;
+    //minicart from header
+    @FindBy(css = ".header-minicart span:nth-child(2)")
+    private WebElement miniCart;
+    @FindBy(css = "#cart-sidebar>li .product-details")
+    private List<WebElement> miniCartRecentlyAddedProd;
 
 
 //-------------------
@@ -275,11 +280,14 @@ public class CartPage extends  AbstractPage{
     public void modifyProductQtyFromCart(String name,String value){
         List<WebElementFacade> productFromCart=getProductList();
         for(WebElementFacade prod:productFromCart) {
-            String productName=prod.findElement(By.cssSelector(" .product-name>a")).getText();
+            String productName=prod.findElement(By.cssSelector(".product-name>a")).getText();
+            System.out.println("product Name "+productName);
+            System.out.println("parametru "+name);
             if(productName.equals(name)){
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).clear();
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).sendKeys(value);
                 prod.findElement(By.cssSelector("button[class='button btn-update']")).click();
+                break;
 
             }
 
@@ -300,6 +308,31 @@ public class CartPage extends  AbstractPage{
             }
 
         }
+    }
+    //minicart from header
+    public WebElement getMiniCart(){
+        return miniCart;
+    }
+    public List<CartProduct> getMiniCartRecentlyAddedProd(){
+        List<CartProduct> miniCartProducts=new ArrayList<>();
+        List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+        for(WebElement prod:miniCartProductsUi){
+            String name=prod.findElement(By.cssSelector(".product-name")).getText();
+            System.out.println(name);
+            String qty=prod.findElement(By.cssSelector(".qty-wrapper input")).getAttribute("value");
+            System.out.println(qty);
+            double doubleQty=convertStringToDouble(qty);
+            String price=prod.findElement(By.cssSelector(".price")).getText();
+            System.out.println(price);
+            double doublePrice=convertStringToDouble(stringReplace(price));
+            CartProduct cartProduct=new CartProduct();
+            cartProduct.setName(name);
+            cartProduct.setPrice(doublePrice);
+            cartProduct.setQty(qty);
+            cartProduct.setSubtotal(doublePrice*doubleQty);
+            miniCartProducts.add(cartProduct);
+        }
+        return miniCartProducts;
     }
 
 }

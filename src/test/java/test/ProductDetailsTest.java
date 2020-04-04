@@ -27,7 +27,7 @@ public class ProductDetailsTest extends BaseTest{
     @Test
     //modificare calc
     public void getCartProduct(){
-        String name="TORI TANK";
+
         String name1="Lafayette Convertible Dress";
         String name2="ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
@@ -43,6 +43,7 @@ public class ProductDetailsTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
         products.add(cartProduct1);
 
+        String name="TORI TANK";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name);
         CartProduct cartProduct2=productDetailsSteps.addProduct("Indigo","M","1");

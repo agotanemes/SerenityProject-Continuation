@@ -78,6 +78,7 @@ public class ProductDetailsSteps {
             Assert.assertTrue(price1.equals(price2));
             Double subtotal1=products.get(i).getSubtotal();
             Double subtotal2=cartProducts.get(i).getSubtotal();
+            System.out.println("subtotaluri "+subtotal1+" "+subtotal2);
             Assert.assertTrue(subtotal1.equals(subtotal2));
 
 
@@ -97,7 +98,7 @@ public class ProductDetailsSteps {
             Assert.assertTrue("Qty are not correct",expectedProduct.getQty() == actualProduct.getQty());
         }
     }
-
+    @Step
     public CartProduct findProductInList(CartProduct searchedProduct,List<CartProduct> products){
         for (CartProduct product:products) {
             if(product.getName().contentEquals(searchedProduct.getName())){

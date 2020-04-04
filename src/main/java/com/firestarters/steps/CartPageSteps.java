@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 public class CartPageSteps {
 
     CartPage cartPage;
+    ProductDetailsSteps productDetailsSteps;
 
 
     //Ciuverca Ionut
@@ -147,6 +148,37 @@ public class CartPageSteps {
     @Step
     public void modifyProductQty(String name,String value,List<CartProduct> products){
         cartPage.modifyProductQty(name,value,products);
+    }
+    //minicart from header
+    public WebElement getMiniCart(){
+        return cartPage.getMiniCart();
+    }
+    public List<CartProduct> getMiniCartRecentlyAddedProd(){
+       return cartPage.getMiniCartRecentlyAddedProd();
+    }
+    @Step
+    public void checkCartListContainsAnotherCartList(List<CartProduct> searchedProducts,List<CartProduct> products ){
+        int productsSize=products.size();
+        int searchedproductsSize=searchedProducts.size();
+        int i=0;
+        int j=productsSize-1;
+
+        while(searchedproductsSize>0){
+            Assert.assertTrue(products.get(j).getQty().equals(searchedProducts.get(i).getQty()));
+            Assert.assertTrue(products.get(j).getName().equals(searchedProducts.get(i).getName()));
+            Double price1= products.get(j).getPrice();
+            Double price2=searchedProducts.get(i).getPrice();
+            //Assert.assertTrue(products.get(i).getProductPrice().equals(cartProducts.get(i).getProductPrice()));
+            Assert.assertTrue(price1.equals(price2));
+            Double subtotal1=products.get(j).getSubtotal();
+            Double subtotal2=searchedProducts.get(i).getSubtotal();
+            Assert.assertTrue(subtotal1.equals(subtotal2));
+            searchedproductsSize=searchedproductsSize-1;
+            j=j-1;
+            i=i+1;
+
+
+        }
     }
 
 }
