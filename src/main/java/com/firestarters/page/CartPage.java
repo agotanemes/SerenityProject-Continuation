@@ -363,11 +363,12 @@ public class CartPage extends  AbstractPage{
         for(WebElement prod:miniCartProductsUi) {
             String prodName = prod.findElement(By.cssSelector(".product-name")).getText();
             if (prodName.equals(name)) {
-                waitABit(5000);
+                //waitABit(5000);
                 clickOnWebElem(prod.findElement(By.cssSelector("a[title='Remove This Item']")));
                 break;
             }
         }
+        waitABit(5000);
     }
     public boolean findProductInList(String name,List<CartProduct> products){
         boolean ok=false;

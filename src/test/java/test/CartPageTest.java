@@ -73,7 +73,7 @@ public class CartPageTest extends BaseTest{
         productDetailsSteps.clickAddToCartBtn();
         addedProducts.add(cartProduct);
 
-        String name1="Lafayette Convertible Dress";
+        /*String name1="Lafayette Convertible Dress";
         homepageSteps.clickOnSubcategoryOfACategory("Women","New Arrivals");
         productPageSteps.openProduct(name1);
         CartProduct cartProduct1=productDetailsSteps.addProduct("Blue","6","2");
@@ -85,10 +85,10 @@ public class CartPageTest extends BaseTest{
         productPageSteps.openProduct(name);
         CartProduct cartProduct2=productDetailsSteps.addProduct("Indigo","M","1");
         productDetailsSteps.clickAddToCartBtn();
-        addedProducts.add(cartProduct2);
+        addedProducts.add(cartProduct2);*/
 
         //un obiect care are calculate grand total,subtotal si tax pe baza listei de produse adaugate
-        CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,tax);
+        /*CartTotalPrices expected=cartPageSteps.calculatePricesThatComposeGrandTotal(addedProducts,tax);
         //un obiect care ia grand Total,subtotal si tax de pe fron, din cart
         CartTotalPrices actual=cartPageSteps.getPricesThatComposeGrangTotal();
         //verificam ca cele doua obiecte sunt la fel
@@ -134,7 +134,7 @@ public class CartPageTest extends BaseTest{
             System.out.println(p.getPrice());
             System.out.println(p.getSubtotal());
         }*/
-        //verificare ca produsele din mini cart (ultimele trei adaugate) sunt aceleasi cu eltimele 3 produse din lista de produse adaugate in cart
+        /*//verificare ca produsele din mini cart (ultimele trei adaugate) sunt aceleasi cu eltimele 3 produse din lista de produse adaugate in cart
         cartPageSteps.checkCartListContainsAnotherCartList(minicartProducts,addedProducts);
         //modificarea cantitatii unui produs din mini cart
         cartPageSteps.modifyMiniCartProduct("ELIZABETH KNIT TOP","4");
@@ -146,9 +146,9 @@ public class CartPageTest extends BaseTest{
         cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,cartProductAfterChangesInMiniCart);
         //modificam cantitatea produsului si in addedProducts si verificam ca ultimele 3 produse de aici sunt aceleasi cu cele din minicart
         cartPageSteps.modifyProductQty("ELIZABETH KNIT TOP","4",addedProducts);
-        cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,addedProducts);
+        cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,addedProducts);*/
         //stergem un produs din miniCart
-        //cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.removeMiniCartProduct("ELIZABETH KNIT TOP");
         cartPageSteps.pressEnter();
         webdriver.navigate().refresh();
