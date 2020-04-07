@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebElement;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class CartPageTest extends BaseTest{
         //cartPageSteps.verifyIfSubtotalIsCorrect();
     }
     @Test
-    public void getProducts(){
+    public void getProducts() throws AWTException {
         //produse care se adauga in cos
 
 
@@ -126,14 +127,36 @@ public class CartPageTest extends BaseTest{
         //minicart
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         List<CartProduct> minicartProducts=cartPageSteps.getMiniCartRecentlyAddedProd();
-        for(CartProduct p:minicartProducts){
+        /*for(CartProduct p:minicartProducts){
             System.out.println("index ");
             System.out.println(p.getName());
             System.out.println(p.getQty());
             System.out.println(p.getPrice());
             System.out.println(p.getSubtotal());
-        }
+        }*/
+        //verificare ca produsele din mini cart (ultimele trei adaugate) sunt aceleasi cu eltimele 3 produse din lista de produse adaugate in cart
         cartPageSteps.checkCartListContainsAnotherCartList(minicartProducts,addedProducts);
+        //modificarea cantitatii unui produs din mini cart
+        cartPageSteps.modifyMiniCartProduct("ELIZABETH KNIT TOP","4");
+        webdriver.navigate().refresh();
+        //verificam ca s-a schimbat si in cart ce am modificat si in miniCart
+        List<CartProduct> cartProductAfterChangesInMiniCart=cartPageSteps.getProducts();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        List<CartProduct> miniCartProductsAfterProdCartChanges=cartPageSteps.getMiniCartRecentlyAddedProd();
+        cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,cartProductAfterChangesInMiniCart);
+        //modificam cantitatea produsului si in addedProducts si verificam ca ultimele 3 produse de aici sunt aceleasi cu cele din minicart
+        cartPageSteps.modifyProductQty("ELIZABETH KNIT TOP","4",addedProducts);
+        cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,addedProducts);
+        //stergem un produs din miniCart
+        //cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        cartPageSteps.removeMiniCartProduct("ELIZABETH KNIT TOP");
+        cartPageSteps.pressEnter();
+        webdriver.navigate().refresh();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        List<CartProduct> miniCartProds=cartPageSteps.getMiniCartRecentlyAddedProd();
+        cartPageSteps.findProductInList("ELIZABETH KNIT TOP",miniCartProds);
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+
 
 
 

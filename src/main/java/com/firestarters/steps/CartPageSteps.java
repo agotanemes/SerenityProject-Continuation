@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.awt.*;
 import java.util.List;
 
 import static com.firestarters.utils.Utils.convertStringToDouble;
@@ -179,6 +180,23 @@ public class CartPageSteps {
 
 
         }
+    }
+    @Step
+    public void modifyMiniCartProduct(String name,String qty){
+        cartPage.modifyMiniCartProduct(name,qty);
+    }
+    @Step
+    public void removeMiniCartProduct(String name){
+        cartPage.removeMiniCartProduct(name);
+    }
+    @Step
+    public void findProductInList(String name,List<CartProduct> products){
+        boolean ok=cartPage.findProductInList(name,products);
+        Assert.assertTrue(ok);
+    }
+    @Step
+    public void pressEnter()  {
+        cartPage.pressEnter();
     }
 
 }

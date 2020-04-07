@@ -2,17 +2,25 @@ package com.firestarters.page;
 
 import com.firestarters.models.CartProduct;
 import com.firestarters.models.CartTotalPrices;
+//import com.sun.tools.javac.comp.Enter;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.annotations.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import static com.firestarters.utils.Utils.*;
 
 @DefaultUrl("http://qa2.dev.evozon.com/checkout/cart/")
@@ -281,8 +289,6 @@ public class CartPage extends  AbstractPage{
         List<WebElementFacade> productFromCart=getProductList();
         for(WebElementFacade prod:productFromCart) {
             String productName=prod.findElement(By.cssSelector(".product-name>a")).getText();
-            System.out.println("product Name "+productName);
-            System.out.println("parametru "+name);
             if(productName.equals(name)){
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).clear();
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).sendKeys(value);
@@ -316,14 +322,15 @@ public class CartPage extends  AbstractPage{
     public List<CartProduct> getMiniCartRecentlyAddedProd(){
         List<CartProduct> miniCartProducts=new ArrayList<>();
         List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+        System.out.println("size is:"+miniCartProductsUi.size());
         for(WebElement prod:miniCartProductsUi){
             String name=prod.findElement(By.cssSelector(".product-name")).getText();
-            System.out.println(name);
+            //System.out.println(name);
             String qty=prod.findElement(By.cssSelector(".qty-wrapper input")).getAttribute("value");
-            System.out.println(qty);
+            //System.out.println(qty);
             double doubleQty=convertStringToDouble(qty);
             String price=prod.findElement(By.cssSelector(".price")).getText();
-            System.out.println(price);
+           // System.out.println(price);
             double doublePrice=convertStringToDouble(stringReplace(price));
             CartProduct cartProduct=new CartProduct();
             cartProduct.setName(name);
@@ -333,6 +340,55 @@ public class CartPage extends  AbstractPage{
             miniCartProducts.add(cartProduct);
         }
         return miniCartProducts;
+    }
+    public void modifyMiniCartProduct(String name,String qty){
+        List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+        for(WebElement prod:miniCartProductsUi){
+            String prodName=prod.findElement(By.cssSelector(".product-name")).getText();
+            if(prodName.equals(name)){
+                //prod.findElement(By.cssSelector(".qty-wrapper>td>input")).clear();
+                WebElement inputfield=prod.findElement(By.cssSelector(".qty-wrapper>td>input"));
+                inputfield.sendKeys(Keys.chord(Keys.CONTROL, "a"), qty);
+                //withTimeoutOf(Duration.ofSeconds(30));
+                //prod.findElement(By.cssSelector(".qty-wrapper input")).sendKeys(qty);
+                clickOnWebElem(prod.findElement(By.cssSelector("button")));
+                break;
+            }
+        }
+
+    }
+    public void removeMiniCartProduct(String name){
+        List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+
+        for(WebElement prod:miniCartProductsUi) {
+            String prodName = prod.findElement(By.cssSelector(".product-name")).getText();
+            if (prodName.equals(name)) {
+                waitABit(5000);
+                clickOnWebElem(prod.findElement(By.cssSelector("a[title='Remove This Item']")));
+                break;
+            }
+        }
+    }
+    public boolean findProductInList(String name,List<CartProduct> products){
+        boolean ok=false;
+
+        for(CartProduct prod:products) {
+            String prodName = prod.getName();
+            if (prodName.equals(name)) {
+                ok = true;
+                break;
+            }
+        }
+        return ok;
+    }
+    public void pressEnter() {
+        waitABit(5000);
+        //Robot robot = new Robot();
+        //robot.keyPress(KeyEvent.VK_ENTER); //press enter key
+        //robot.keyRelease(KeyEvent.VK_ENTER); //release enter key
+        Actions builder = new Actions(getDriver());
+        builder.sendKeys(Keys.ENTER);
+
     }
 
 }
