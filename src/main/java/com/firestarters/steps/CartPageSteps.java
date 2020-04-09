@@ -81,8 +81,8 @@ public class CartPageSteps {
         return cartTotalPrices;
     }
     @Step
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products,double tax){
-        return cartPage.calculatePricesThatComposeGrandTotal(products,tax);
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
+        return cartPage.calculatePricesThatComposeGrandTotal(products);
     }
     @Step
     public void verifyTotals(CartTotalPrices actual,CartTotalPrices expected){
@@ -97,10 +97,11 @@ public class CartPageSteps {
         Assert.assertTrue(actualGrandTotal.equals(expectedGrandTotal));
     }
     @Step
-    public void verifyNrOfProductsFromCart(){
+    public void verifyNrOfProductsFromCart(List<CartProduct> prods){
 
          String nrprod=cartPage.getNrOfProductsFromCart();
-         Integer size=cartPage.getProducts().size();
+         //Integer size=cartPage.getProducts().size();
+        Integer size=prods.size();
          Integer nrProducts=Integer.parseInt(nrprod);
          Assert.assertFalse(size.equals(nrProducts));
     }
@@ -163,8 +164,9 @@ public class CartPageSteps {
         int searchedproductsSize=searchedProducts.size();
         int i=0;
         int j=productsSize-1;
-
+        System.out.println("Begin");
         while(searchedproductsSize>0){
+            //System.out.println("mini: "+searchedProducts.get(i).getQty()+" product "+products.get(j).getQty());
             Assert.assertTrue(products.get(j).getQty().equals(searchedProducts.get(i).getQty()));
             Assert.assertTrue(products.get(j).getName().equals(searchedProducts.get(i).getName()));
             Double price1= products.get(j).getPrice();
@@ -192,12 +194,9 @@ public class CartPageSteps {
     @Step
     public void findProductInList(String name,List<CartProduct> products){
         boolean ok=cartPage.findProductInList(name,products);
-        Assert.assertTrue(ok);
+        Assert.assertFalse(ok);
     }
-    @Step
-    public void pressEnter()  {
-        cartPage.pressEnter();
-    }
+
 
 }
 

@@ -1,6 +1,7 @@
 package com.firestarters.utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.decimal4j.util.DoubleRounder;
 //import org.jcp.xml.dsig.internal.SignerOutputStream;
 
 public class Utils {
@@ -64,6 +65,9 @@ public class Utils {
         System.out.println((splitStringByComma(bycomma)).length);
         String[] splitcomma=splitStringByComma(bycomma);
         System.out.println(splitcomma[0].length());
+        double tax=0.0825*270.00;
+        double drounder= DoubleRounder.round(tax,2);
+        System.out.println(drounder);
 
     }
     public static String[] splitByEnter(String s){

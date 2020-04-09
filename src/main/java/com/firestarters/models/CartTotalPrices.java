@@ -1,5 +1,9 @@
 package com.firestarters.models;
 
+import org.decimal4j.util.DoubleRounder;
+
+import java.text.DecimalFormat;
+
 public class CartTotalPrices {
     double subtotal;
     double tax;
@@ -19,6 +23,12 @@ public class CartTotalPrices {
 
     public void setTax(double tax) {
         this.tax = tax;
+    }
+
+    public void setCalcTax() {
+        double tax=0.0825*this.subtotal;
+        double drounder= DoubleRounder.round(tax,2);
+        this.tax=drounder;
     }
 
     public double getGrandTotal() {

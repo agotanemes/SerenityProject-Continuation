@@ -212,12 +212,14 @@ public class CartPage extends  AbstractPage{
      cartTotalPrices.setSubtotal(subtotal);
      return cartTotalPrices;
     }
-    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products,double tax){
+    //aici am modificat
+    public CartTotalPrices calculatePricesThatComposeGrandTotal(List<CartProduct>products){
         CartTotalPrices cartTotalPrices=new CartTotalPrices();
         double subtotal=getTheSumOfSubtotals(products);
         cartTotalPrices.setSubtotal(subtotal);
-        cartTotalPrices.setTax(tax);
-        cartTotalPrices.setGrandTotal(tax+subtotal);
+        cartTotalPrices.setCalcTax();
+        //cartTotalPrices.setTax(tax);
+        cartTotalPrices.setGrandTotal(cartTotalPrices.getTax()+subtotal);
         return cartTotalPrices;
     }
     public String getNrOfProductsFromCart(){
@@ -363,8 +365,9 @@ public class CartPage extends  AbstractPage{
         for(WebElement prod:miniCartProductsUi) {
             String prodName = prod.findElement(By.cssSelector(".product-name")).getText();
             if (prodName.equals(name)) {
-                //waitABit(5000);
                 clickOnWebElem(prod.findElement(By.cssSelector("a[title='Remove This Item']")));
+                getDriver().switchTo().alert().accept();
+                waitABit(5000);
                 break;
             }
         }
@@ -382,14 +385,20 @@ public class CartPage extends  AbstractPage{
         }
         return ok;
     }
-    public void pressEnter() {
-        waitABit(5000);
+   /*public void pressEnter() {
+
         //Robot robot = new Robot();
         //robot.keyPress(KeyEvent.VK_ENTER); //press enter key
         //robot.keyRelease(KeyEvent.VK_ENTER); //release enter key
-        Actions builder = new Actions(getDriver());
-        builder.sendKeys(Keys.ENTER);
+        //Actions builder = new Actions(getDriver());
+        //builder.sendKeys(Keys.ENTER);
+        //String text=getDriver().switchTo().alert().getText();
+        //System.out.println("pop up: "+text);
+        //getDriver().switchTo().alert().accept();
+        //getDriver().switchTo().alert().dismiss();
+       getDriver().switchTo().alert().accept();
+       waitABit(5000);
 
-    }
+    }*/
 
 }
