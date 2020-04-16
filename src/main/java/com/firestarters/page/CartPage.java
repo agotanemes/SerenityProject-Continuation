@@ -324,7 +324,7 @@ public class CartPage extends  AbstractPage{
     public List<CartProduct> getMiniCartRecentlyAddedProd(){
         List<CartProduct> miniCartProducts=new ArrayList<>();
         List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
-        System.out.println("size is:"+miniCartProductsUi.size());
+        //System.out.println("size is:"+miniCartProductsUi.size());
         for(WebElement prod:miniCartProductsUi){
             String name=prod.findElement(By.cssSelector(".product-name")).getText();
             //System.out.println(name);

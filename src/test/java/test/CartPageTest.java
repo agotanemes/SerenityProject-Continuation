@@ -40,12 +40,7 @@ public class CartPageTest extends BaseTest{
     @Steps
     CheckoutPageSteps checkoutPageSteps;
     List<CartProduct> addedProducts=new ArrayList<>();
-    /*final double tax=90.75;
-    final double taxAfterDelete=34.65;
-    final double taxAftermodify=51.98;*/
-    final double tax=95.70;
-    final double taxAfterDelete=39.60;
-    final double taxAftermodify=56.93;
+
     @Test
     public void correctSubtotal(){
         loginSteps.navigateToLoginPage();
@@ -141,15 +136,6 @@ public class CartPageTest extends BaseTest{
         List<CartProduct> miniCartProductsAfterProdCartChanges=cartPageSteps.getMiniCartRecentlyAddedProd();
         cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,cartProductAfterChangesInMiniCart);
         //modificam cantitatea produsului si in addedProducts si verificam ca ultimele 3 produse de aici sunt aceleasi cu cele din minicart
-        System.out.println("Mini cart dupa modificare cantitate produs in 4");
-        for(CartProduct p:miniCartProductsAfterProdCartChanges){
-            System.out.println(p);
-        }
-        cartPageSteps.modifyProductQty("ELIZABETH KNIT TOP","4",addedProducts);
-        System.out.println("adderProducts dupa modificare cantitate produs in 4");
-        for(CartProduct p:addedProducts){
-            System.out.println(p);
-        }
         cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,addedProducts);
 
         //11)stergem un produs din miniCart+teste

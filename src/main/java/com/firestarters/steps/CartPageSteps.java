@@ -100,7 +100,6 @@ public class CartPageSteps {
     public void verifyNrOfProductsFromCart(List<CartProduct> prods){
 
          String nrprod=cartPage.getNrOfProductsFromCart();
-         //Integer size=cartPage.getProducts().size();
         Integer size=prods.size();
          Integer nrProducts=Integer.parseInt(nrprod);
          Assert.assertFalse(size.equals(nrProducts));
