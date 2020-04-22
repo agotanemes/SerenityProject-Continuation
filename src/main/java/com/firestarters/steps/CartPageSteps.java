@@ -166,6 +166,8 @@ public class CartPageSteps {
         System.out.println("Begin");
         while(searchedproductsSize>0){
             //System.out.println("mini: "+searchedProducts.get(i).getQty()+" product "+products.get(j).getQty());
+            System.out.println("produsele din cart: "+ products.get(j));
+            System.out.println("produsele din minicart: "+searchedProducts.get(i));
             Assert.assertTrue(products.get(j).getQty().equals(searchedProducts.get(i).getQty()));
             Assert.assertTrue(products.get(j).getName().equals(searchedProducts.get(i).getName()));
             Double price1= products.get(j).getPrice();

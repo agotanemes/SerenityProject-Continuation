@@ -135,6 +135,7 @@ public class CartPageTest extends BaseTest{
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         List<CartProduct> miniCartProductsAfterProdCartChanges=cartPageSteps.getMiniCartRecentlyAddedProd();
         cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,cartProductAfterChangesInMiniCart);
+        cartPageSteps.modifyProductQty("ELIZABETH KNIT TOP","4",addedProducts);
         //modificam cantitatea produsului si in addedProducts si verificam ca ultimele 3 produse de aici sunt aceleasi cu cele din minicart
         cartPageSteps.checkCartListContainsAnotherCartList(miniCartProductsAfterProdCartChanges,addedProducts);
 
